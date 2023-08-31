@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({super.key});
+  final String name = 'Mi Perfil';
 
   @override
   State<PerfilScreen> createState() => _PerfilScreenState();
@@ -11,11 +12,8 @@ class _PerfilScreenState extends State<PerfilScreen> {
   @override
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mi Perfil'),
-      ),
-      body: const Center(
+    return const Scaffold(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

@@ -5,6 +5,8 @@ import 'package:app_movil/screens/registrar_mascota_screen.dart';
 import 'package:app_movil/screens/scanner_qr_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'nav_bar.dart';
+
 class MainWidget extends StatefulWidget {
   static const routeName = '/';
 
@@ -26,6 +28,14 @@ class _MainWidgetState extends State<MainWidget> {
     PerfilScreen()
   ];
 
+  final List<String> _titles = const [
+    'Noticias',
+    'Mis Mascotas',
+    'Agregar Mascota',
+    'Escanear QR',
+    'Mi perfil'
+  ];
+
   void _onTapItem(int index) {
     setState(() {
       _selectedIndex = index;
@@ -35,6 +45,10 @@ class _MainWidgetState extends State<MainWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const NavBar(),
+      appBar: AppBar(
+        title: Text(_titles[_selectedIndex]),
+      ),
       body: _mainWidgets[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

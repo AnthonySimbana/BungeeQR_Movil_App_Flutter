@@ -12,9 +12,6 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Registrar mascota'),
-      ),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
