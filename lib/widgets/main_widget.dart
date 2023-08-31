@@ -37,6 +37,7 @@ class _MainWidgetState extends State<MainWidget> {
     return Scaffold(
       body: _mainWidgets[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.category),
@@ -44,7 +45,7 @@ class _MainWidgetState extends State<MainWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.details),
-            label: 'Mis mascotas',
+            label: 'Mascotas',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),

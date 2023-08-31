@@ -12,7 +12,6 @@ class _AgregarNoticiaScreenState extends State<AgregarNoticiaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Agregar Noticia'),
       ),
       body: const Center(

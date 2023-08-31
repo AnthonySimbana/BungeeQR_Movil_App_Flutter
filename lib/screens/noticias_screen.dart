@@ -12,7 +12,6 @@ class _NoticiasScreenState extends State<NoticiasScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Noticias'),
       ),
       body: const Center(
