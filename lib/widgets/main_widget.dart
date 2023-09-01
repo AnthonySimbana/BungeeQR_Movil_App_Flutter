@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'nav_bar.dart';
 
 class MainWidget extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = '/main';
 
   const MainWidget({super.key});
 
@@ -20,7 +20,7 @@ class MainWidget extends StatefulWidget {
 class _MainWidgetState extends State<MainWidget> {
   int _selectedIndex = 0;
 
-  final List<Widget> _mainWidgets = const [
+  final List<Widget> _mainWidgets = [
     NoticiasScreen(),
     MascotasScreen(),
     RegistrarMascotaScreen(),
@@ -54,23 +54,23 @@ class _MainWidgetState extends State<MainWidget> {
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.category),
+            icon: Icon(Icons.home),
             label: 'Inicio',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.details),
+            icon: Icon(Icons.pets),
             label: 'Mascotas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            label: '+',
+            icon: Icon(Icons.add_circle_outline),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.category),
+            icon: Icon(Icons.qr_code_scanner),
             label: 'QR',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.category),
+            icon: Icon(Icons.person),
             label: 'Perfil',
           )
         ],
