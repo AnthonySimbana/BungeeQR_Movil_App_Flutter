@@ -43,12 +43,16 @@ class _MainWidgetState extends State<MainWidget> {
     });
   }
 
+  final colorPrincipal = const Color(0xFF4A43EC);
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavBar(),
       appBar: AppBar(
         title: Text(_titles[_selectedIndex]),
+        backgroundColor: colorPrincipal,
       ),
       body: _mainWidgets[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

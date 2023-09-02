@@ -43,7 +43,7 @@ TextFormField reusableTextFormField(
   String text,
   IconData icon,
   TextEditingController controller,
-  String? Function(String)? onSaved,
+  void Function(String?)? onSaved, // Cambiar el tipo de retorno a void
   String? Function(String?)? validator,
 ) {
   return TextFormField(
