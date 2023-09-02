@@ -23,8 +23,10 @@ class NoticiaProvider extends ChangeNotifier {
   }
 
   void searchNoticasByDescription(String name) {
+    final normalizedSearch = name.toLowerCase(); //Tranformar a minusculas
     _noticia = _originalNoticias
-        .where((element) => element.descripcion.contains(name))
+        .where((element) => element.descripcion.toLowerCase().
+        contains(normalizedSearch))
         .toList();
     notifyListeners();
   }

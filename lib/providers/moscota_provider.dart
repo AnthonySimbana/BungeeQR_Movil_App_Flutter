@@ -23,8 +23,11 @@ class MascotaProvider extends ChangeNotifier {
   }
 
   void searchMascotasByName(String name) {
+    final normalizedSearch = name.toLowerCase(); //Tranformar a minusculas
+
     _mascota = _originalMascotas
-        .where((element) => element.nombre.contains(name))
+        .where((element) => element.nombre.toLowerCase().
+        contains(normalizedSearch))
         .toList();
     notifyListeners();
   }

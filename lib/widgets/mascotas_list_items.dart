@@ -42,7 +42,7 @@ class _MascotaListItemsState extends State<MascotaListItems> {
                 leading: AspectRatio(
                   aspectRatio: 2,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(2.0),
                       child: Image.network(
                         'http://placekitten.com/200/300',
                         fit: BoxFit.cover,
