@@ -39,7 +39,6 @@ class _MascotaListItemsState extends State<MascotaListItems> {
                 //       repeat: ImageRepeat.noRepeat,   
                 //     ),
                 //   ),
-
                 leading: AspectRatio(
                   aspectRatio: 2,
                     child: ClipRRect(
