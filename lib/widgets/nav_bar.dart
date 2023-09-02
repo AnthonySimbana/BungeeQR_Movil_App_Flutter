@@ -1,6 +1,4 @@
-import 'package:app_movil/screens/signin_screen.dart';
-import 'package:app_movil/screens/signup_screen.dart';
-import 'package:app_movil/widgets/main_widget.dart';
+import 'package:app_movil/screens/login/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
-
-import 'package:app_movil/dtos/mascota_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:app_movil/dtos/mascota_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -49,39 +48,41 @@ class MascotaProvider extends ChangeNotifier {
         );
   }
 
+  //Trae todas las mascotas de la base de datos
   Future<void> _initMascotaList() async {
-    var client = http.Client();
-    var response = await client.get(Uri.http('pokeapi.co', '/api/v2/pokemon'));
-    print('statusPokemon: ${response.statusCode}'); //codigo de retorno HTTP
-    //20X -> OK
-    //40X -> Errores de lado del cliente (404, 403)
-    //50X -> Errores de lado del servidor (500)
-    //print('pokemon List: ${response.body}');
-    //DART - JSON -> Map<String, Object> -> Object -> List
-    var decodedResponse = jsonDecode(response.body);
-    var results = decodedResponse['results'] as List;
-    for (var ri in results) {
-      //ri -Map<String, Object>
-      var url = ri['url'] as String;
-      await addPokemonList(url);
+    try {
+      var db = FirebaseFirestore.instance;
+      var querySnapshot = await db.collection('mascotas').get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        for (var doc in querySnapshot.docs) {
+          var mascotaData = doc.data() as Map<String, dynamic>;
+          _mascota.add(Mascota.fromFirebaseJson(mascotaData));
+          _originalMascotas.add(Mascota.fromFirebaseJson(mascotaData));
+        }
+        notifyListeners();
+      } else {
+        print("La colección 'mascotas' está vacía en Firestore.");
+      }
+    } catch (e) {
+      print("Error al obtener datos desde Firestore: $e");
     }
-    notifyListeners();
   }
 
   Future<void> addPokemonList(String url) async {
     var client = http.Client();
     var response = await client.get(Uri.parse(url));
-    var pokemonData = jsonDecode(response.body);
+    var mascotaData = jsonDecode(response.body);
     print('Procesando: $url');
 
-    _mascota.add(Mascota.fromJson(pokemonData)); //Agrega
-    _originalMascotas.add(Mascota.fromJson(pokemonData));
+    _mascota.add(Mascota.fromJson(mascotaData)); //Agrega
+    _originalMascotas.add(Mascota.fromJson(mascotaData));
 
     final pokemonDocument = <String, dynamic>{
-      //'id': pokemonData['id'],
-      'name': pokemonData['name'],
-      'id': pokemonData['id'],
-      'imageUrl': pokemonData['sprites']['front_default']
+      //'id': mascotaData['id'],
+      'name': mascotaData['name'],
+      'id': mascotaData['id'],
+      'imageUrl': mascotaData['sprites']['front_default']
     };
 
     var db = FirebaseFirestore.instance;
@@ -91,7 +92,7 @@ class MascotaProvider extends ChangeNotifier {
     var setOptions = SetOptions(merge: true);
     db
         .collection("mascotas")
-        .doc(pokemonData['id'].toString())
+        .doc(mascotaData['id'].toString())
         .set(pokemonDocument, setOptions) //
         .then((value) => print("Success"));
   }

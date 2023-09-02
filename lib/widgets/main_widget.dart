@@ -1,7 +1,8 @@
-import 'package:app_movil/screens/mascotas_screen.dart';
-import 'package:app_movil/screens/noticias_screen.dart';
+import 'package:app_movil/screens/mascota/mascota_details_screen.dart';
+import 'package:app_movil/screens/mascota/mascota_screen.dart';
+import 'package:app_movil/screens/noticia/noticias_screen.dart';
 import 'package:app_movil/screens/perfil_screen.dart';
-import 'package:app_movil/screens/registrar_mascota_screen.dart';
+import 'package:app_movil/screens/mascota/registrar_mascota_screen.dart';
 import 'package:app_movil/screens/scanner_qr_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +22,8 @@ class _MainWidgetState extends State<MainWidget> {
   int _selectedIndex = 0;
 
   final List<Widget> _mainWidgets = [
-    NoticiasScreen(),
-    MascotasScreen(),
+    const NoticiaScreen(),
+    const MascotaScreen(),
     RegistrarMascotaScreen(),
     ScannerScreen(),
     PerfilScreen()

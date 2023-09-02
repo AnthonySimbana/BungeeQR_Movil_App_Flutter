@@ -1,5 +1,8 @@
 import 'package:app_movil/providers/moscota_provider.dart';
-import 'package:app_movil/screens/signin_screen.dart';
+import 'package:app_movil/providers/noticia_provider.dart';
+import 'package:app_movil/screens/login/signin_screen.dart';
+import 'package:app_movil/screens/mascota/mascota_details_screen.dart';
+import 'package:app_movil/screens/noticia/noticia_details_screen.dart';
 import 'package:app_movil/widgets/main_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => MascotaProvider()),
+        ChangeNotifierProvider(create: (context) => NoticiaProvider()),
       ],
       child: MaterialApp(
         title: 'BungeeQR',
@@ -34,6 +38,10 @@ class MyApp extends StatelessWidget {
         //initialRoute: MainWidget.routeName,
         routes: {
           MainWidget.routeName: (context) => const MainWidget(),
+          MascotaDetailsScreen.routeName: (context) =>
+              const MascotaDetailsScreen(),
+          NoticiaDetailsScreen.routeName: (context) =>
+              const NoticiaDetailsScreen(),
         },
       ),
     );

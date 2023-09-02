@@ -1,10 +1,8 @@
-import 'dart:html';
-
+import 'package:app_movil/screens/login/reset_password.dart';
+import 'package:app_movil/screens/login/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app_movil/widgets/reusable_widget.dart';
 import 'package:app_movil/widgets/main_widget.dart';
-import 'package:app_movil/screens/reset_password.dart';
-import 'package:app_movil/screens/signup_screen.dart';
 import 'package:app_movil/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -108,7 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             child: Column(
               children: <Widget>[
-                //logoWidget("assets/images/logo1.png"),
+                //logoWidget('assets/images/logoBungeeQR.png'),
                 const Text(
                   "My app movil",
                   style: TextStyle(

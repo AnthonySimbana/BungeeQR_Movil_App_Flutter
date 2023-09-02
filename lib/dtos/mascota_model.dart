@@ -3,7 +3,7 @@ class Mascota {
   String nombre;
   String especie;
   String genero;
-  int edad;
+  String edad;
   String descripcion;
   String imageUrl;
 
