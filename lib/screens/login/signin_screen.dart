@@ -19,8 +19,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
 
   void _signIn() async {
-    if (_emailTextController.text.isEmpty ||
-        _passwordTextController.text.isEmpty) {
+    if (_emailTextController.text.isEmpty || _passwordTextController.text.isEmpty) {
       showDialog(
         context: context,
         builder: (context) {
@@ -39,25 +38,8 @@ class _SignInScreenState extends State<SignInScreen> {
           );
         },
       );
-      print("Error en inicio de sesion, no se ingresaron credenciales");
-      return;
-    }
-
-    /* try {
-      final userCredential =
-          await _auth.signInWithEmailAndPassword(
-        email: _emailTextController.text,
-        password: _passwordTextController.text,
-      );
-
-      // Navegar a la pantalla principal después del inicio de sesión exitosoç
-      Navigator.pushReplacementNamed(context, MainWidget.routeName);
-    } catch (error) {
-      // Mostrar un mensaje de error al usuario (puedes personalizar el mensaje según el tipo de error)
-      print("Error de inicio de sesión: ${error.toString()}");
-    }
-    */
-    try {
+    }else{
+      try{
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailTextController.text,
           password: _passwordTextController.text);
@@ -66,9 +48,28 @@ class _SignInScreenState extends State<SignInScreen> {
         context,
         MaterialPageRoute(builder: (context) => const MainWidget()),
       );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-        print("Credenciales incorrectas");
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-email') {   
+          print("Credenciales incorrectas");
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Error'),
+                content: const Text(
+                    'Correo electronico y/o Contraseña Incorrectas. Por favor, intenta de nuevo.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context); // Cerrar el cuadro de diálogo
+                    },
+                    child: const Text('Aceptar'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       }
     }
   }

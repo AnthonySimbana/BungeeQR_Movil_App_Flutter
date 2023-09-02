@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app_movil/widgets/reusable_widget.dart';
-import 'package:app_movil/widgets/main_widget.dart';
 import 'package:app_movil/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 
