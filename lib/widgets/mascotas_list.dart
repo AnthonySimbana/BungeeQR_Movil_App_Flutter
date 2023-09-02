@@ -14,9 +14,7 @@ class _PokemonListState extends State<MascotaList> {
   @override
   Widget build(BuildContext context) {
     return Consumer<MascotaProvider>(builder: (context, provider, child) {
-      return MascotaListItems(
-          mascotas: provider
-              .mascotas); //Wiget que va a reenderizar el arreglo de pokemons
+      return MascotaListItems(mascotas: provider.mascotas); //Wiget que va a reenderizar el arreglo de pokemons
     });
   }
 }
