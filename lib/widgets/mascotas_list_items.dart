@@ -23,33 +23,34 @@ class _MascotaListItemsState extends State<MascotaListItems> {
                   arguments: widget.mascotas[index]
                       .id) //'widget' es para usar atributos de la clase
             },
-            child: Container(
-              height: 115, //altura de cada elemento,            
-              child: Card(
+            child: Card(
               elevation: 10,
               child: ListTile(
-                contentPadding: EdgeInsets.all(10),
-                // leading: Container(
-                //   width: 100,
-                //   height: 200,
-                //   child:
-                //     Image.network(
-                //       'http://placekitten.com/200/300',
-                //       fit: BoxFit.cover,
-                //       repeat: ImageRepeat.noRepeat,   
-                //     ),
-                //   ),
-                leading: AspectRatio(
-                  aspectRatio: 2,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        'http://placekitten.com/200/300',
-                        fit: BoxFit.cover,
-                        repeat: ImageRepeat.noRepeat
+                leading: 
+                  AspectRatio(
+                    aspectRatio: 16/9,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                          'http://placekitten.com/200/300',
+                          fit: BoxFit.cover,
+                          repeat: ImageRepeat.noRepeat
+                        ),
                       ),
-                    ),
-                ),
+                  ),
+                
+                // CircleAvatar(
+                    // leading: AspectRatio(
+                    //   aspectRatio: 16/9,
+                    //     child: ClipRRect(
+                    //       borderRadius: BorderRadius.circular(8.0),
+                    //       child: Image.network(
+                    //         'http://placekitten.com/200/300',
+                    //         fit: BoxFit.cover,
+                    //         repeat: ImageRepeat.noRepeat
+                    //       ),
+                    //     ),
+                    // ),
                 
                 title: Text('Nombre: ${widget.mascotas[index].nombre}'),
                 subtitle: 
@@ -80,9 +81,7 @@ class _MascotaListItemsState extends State<MascotaListItems> {
                 
               ),
             ),
-          ),
-        ),
-
+          )
         );
       },
               
