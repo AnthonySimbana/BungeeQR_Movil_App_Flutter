@@ -7,14 +7,16 @@ class MascotaList extends StatefulWidget {
   const MascotaList({super.key});
 
   @override
-  State<MascotaList> createState() => _PokemonListState();
+  State<MascotaList> createState() => _MascotaListState();
 }
 
-class _PokemonListState extends State<MascotaList> {
+class _MascotaListState extends State<MascotaList> {
   @override
   Widget build(BuildContext context) {
     return Consumer<MascotaProvider>(builder: (context, provider, child) {
-      return MascotaListItems(mascotas: provider.mascotas); //Wiget que va a reenderizar el arreglo de pokemons
+      return MascotaListItems(
+          mascotas: provider
+              .mascotas); //Wiget que va a reenderizar el arreglo de pokemons
     });
   }
 }
