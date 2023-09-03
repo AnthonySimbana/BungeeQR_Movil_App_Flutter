@@ -6,6 +6,8 @@ import 'package:app_movil/screens/mascota/registrar_mascota_screen.dart';
 import 'package:app_movil/screens/scanner_qr_screen.dart';
 import 'package:flutter/material.dart';
 
+
+import '../utils/color_utils.dart';
 import 'nav_bar.dart';
 
 class MainWidget extends StatefulWidget {
@@ -43,7 +45,6 @@ class _MainWidgetState extends State<MainWidget> {
     });
   }
 
-  final colorPrincipal = const Color(0xFF4A43EC);
 
 
   @override
@@ -51,12 +52,14 @@ class _MainWidgetState extends State<MainWidget> {
     return Scaffold(
       drawer: const NavBar(),
       appBar: AppBar(
+        backgroundColor: hexStringToColor('#4A43EC'),
         title: Text(_titles[_selectedIndex]),
-        backgroundColor: colorPrincipal,
+        
       ),
       body: _mainWidgets[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        selectedItemColor:  hexStringToColor('#4A43EC'),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

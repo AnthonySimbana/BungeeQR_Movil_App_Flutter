@@ -3,11 +3,13 @@ import 'package:app_movil/providers/noticia_provider.dart';
 import 'package:app_movil/screens/login/signin_screen.dart';
 import 'package:app_movil/screens/mascota/mascota_details_screen.dart';
 import 'package:app_movil/screens/noticia/noticia_details_screen.dart';
+import 'package:app_movil/utils/color_utils.dart';
 import 'package:app_movil/widgets/main_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 import 'firebase_options.dart';
 
@@ -17,12 +19,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'BungeeQR',
         home: const AuthenticationWrapper(),
-
+        theme: ThemeData(
+          primaryColor: hexStringToColor('#4A43EC'),
+          iconTheme: IconThemeData(color: hexStringToColor('#4A43EC')),
+          fontFamily: 'Roboto',
+        ),
         //initialRoute: MainWidget.routeName,
         routes: {
           MainWidget.routeName: (context) => const MainWidget(),

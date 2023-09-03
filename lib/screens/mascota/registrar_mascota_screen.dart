@@ -76,6 +76,7 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
                     // como guardarlos en una base de datos.
                     // Luego, puedes navegar a otra pantalla o realizar
                     // la acción que desees.
+                    
                   }
                 },
                 child: Text('Guardar'),

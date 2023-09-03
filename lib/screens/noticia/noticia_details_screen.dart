@@ -1,8 +1,8 @@
 import 'package:app_movil/dtos/noticia_model.dart';
-import 'package:app_movil/providers/moscota_provider.dart';
 import 'package:app_movil/providers/noticia_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 class NoticiaDetailsScreen extends StatelessWidget {
   static const routeName = '/noticia-details';
