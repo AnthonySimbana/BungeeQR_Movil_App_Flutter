@@ -6,7 +6,6 @@ import 'package:app_movil/screens/mascota/registrar_mascota_screen.dart';
 import 'package:app_movil/screens/scanner_qr_screen.dart';
 import 'package:flutter/material.dart';
 
-
 import '../utils/color_utils.dart';
 import 'nav_bar.dart';
 
@@ -28,7 +27,7 @@ class _MainWidgetState extends State<MainWidget> {
     const MascotaScreen(),
     RegistrarMascotaScreen(),
     ScannerScreen(),
-    PerfilScreen()
+    UserProfileScreen()
   ];
 
   final List<String> _titles = const [
@@ -45,8 +44,6 @@ class _MainWidgetState extends State<MainWidget> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,12 +51,19 @@ class _MainWidgetState extends State<MainWidget> {
       appBar: AppBar(
         backgroundColor: hexStringToColor('#4A43EC'),
         title: Text(_titles[_selectedIndex]),
-        
+        shape: const ContinuousRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft:
+                Radius.circular(50.0), // Ajusta el radio según tus necesidades
+            bottomRight:
+                Radius.circular(50.0), // Ajusta el radio según tus necesidades
+          ),
+        ),
       ),
       body: _mainWidgets[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedItemColor:  hexStringToColor('#4A43EC'),
+        selectedItemColor: hexStringToColor('#4A43EC'),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

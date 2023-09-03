@@ -1,5 +1,6 @@
 import 'package:app_movil/providers/moscota_provider.dart';
 import 'package:app_movil/providers/noticia_provider.dart';
+import 'package:app_movil/providers/usuario_provider.dart';
 import 'package:app_movil/screens/login/signin_screen.dart';
 import 'package:app_movil/screens/mascota/mascota_details_screen.dart';
 import 'package:app_movil/screens/noticia/noticia_details_screen.dart';
@@ -9,7 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 import 'firebase_options.dart';
 
@@ -25,7 +25,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => MascotaProvider()),
         ChangeNotifierProvider(create: (context) => NoticiaProvider()),
+        ChangeNotifierProvider(create: (context) => UsuarioProvider())
       ],
       child: MaterialApp(
         title: 'BungeeQR',
