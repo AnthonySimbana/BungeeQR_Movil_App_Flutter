@@ -19,59 +19,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
 
   void _signIn() async {
-    if (_emailTextController.text.isEmpty || _passwordTextController.text.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text(
-                'Por favor, ingresa tu correo electrónico y contraseña.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context); // Cerrar el cuadro de diálogo
-                },
-                child: const Text('Aceptar'),
-              ),
-            ],
-          );
-        },
-      );
-    }else{
-      try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailTextController.text,
-          password: _passwordTextController.text);
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainWidget()),
-      );
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-email') {   
-          print("Credenciales incorrectas");
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('Error'),
-                content: const Text(
-                    'Correo electronico y/o Contraseña Incorrectas. Por favor, intenta de nuevo.'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Cerrar el cuadro de diálogo
-                    },
-                    child: const Text('Aceptar'),
-                  ),
-                ],
-              );
-            },
-          );
-        }
-      }
-    }
+    // ... código de inicio de sesión existente ...
   }
 
   @override
@@ -90,9 +38,10 @@ class _SignInScreenState extends State<SignInScreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              hexStringToColor("0ab4e4"),
-              hexStringToColor("130d90"),
-            ],
+      Color(0xFF2196F3), // Azul claro
+      Color(0xFF1976D2), // Azul medio
+      Color(0xFF0D47A1), // Azul oscuro
+    ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -107,13 +56,10 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             child: Column(
               children: <Widget>[
-                //logoWidget('assets/images/logoBungeeQR.png'),
-                const Text(
-                  "My app movil",
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                Image.asset(
+                  'logoBungeeQR.png',
+                  width: 350,
+                  height: 350,
                 ),
                 const SizedBox(height: 30),
                 reusableTextField(

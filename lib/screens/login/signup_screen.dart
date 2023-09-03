@@ -17,7 +17,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _userNameTextController = TextEditingController();
   TextEditingController _phoneTextController = TextEditingController();
 
-  String _errorMessage = ""; // Variable para mostrar mensajes de error
+  String _emailErrorMessage = "";
+  String _phoneErrorMessage = "";
+  String _passwordErrorMessage = "";
+
+  final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +36,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              hexStringToColor("0ab4e4"),
-              hexStringToColor("130d90"),
-            ],
+          colors: [
+      Color(0xFF2196F3), // Azul claro
+      Color(0xFF1976D2), // Azul medio
+      Color(0xFF0D47A1), // Azul oscuro
+    ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -54,65 +59,107 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                reusableTextField(
-                  "Ingresa tu nombre",
-                  Icons.person_outline,
-                  false,
-                  _userNameTextController,
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Ingresa tu nombre",
+                    icon: Icon(Icons.person_outline),
+                  ),
+                  controller: _userNameTextController,
                 ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Ingresa tu correo electronico",
-                  Icons.mail,
-                  false,
-                  _emailTextController,
+                const SizedBox(height: 10),
+                
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Ingresa tu correo electrónico",
+                    icon: Icon(Icons.mail),
+                  ),
+                  controller: _emailTextController,
                 ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Ingresa tu celular",
-                  Icons.phone,
-                  false,
-                  _phoneTextController,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Ingresa tu contraseña",
-                  Icons.lock_outlined,
-                  true,
-                  _passwordTextController,
-                ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Text(
-                  _errorMessage,
+                  _emailErrorMessage,
                   style: TextStyle(color: Colors.red),
                 ),
+                
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Ingresa tu celular",
+                    icon: Icon(Icons.phone),
+                  ),
+                  controller: _phoneTextController,
+                ),
+                Text(
+                  _phoneErrorMessage,
+                  style: TextStyle(color: Colors.red),
+                ),
+                const SizedBox(height: 10),
+                
+                
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Ingresa tu contraseña",
+                    icon: Icon(Icons.lock_outlined),
+                  ),
+                  obscureText: true,
+                  controller: _passwordTextController,
+                ),
+                Text(
+                  _passwordErrorMessage,
+                  style: TextStyle(color: Colors.red),
+                ),
+                const SizedBox(height: 20),
                 firebaseUIButton(context, "Crear cuenta", () {
+                  // Validaciones y registro de usuario
                   if (_userNameTextController.text.isEmpty ||
                       _emailTextController.text.isEmpty ||
-                      _passwordTextController.text.isEmpty ||
+                      _phoneTextController.text.isEmpty ||
                       _passwordTextController.text.isEmpty) {
                     setState(() {
-                      _errorMessage = "Por favor, completa todos los campos.";
+                      _emailErrorMessage = "";
+                      _phoneErrorMessage = "";
+                      _passwordErrorMessage = "Por favor, completa todos los campos.";
                     });
                     return;
                   }
 
+                  if (!emailRegex.hasMatch(_emailTextController.text)) {
+                    setState(() {
+                      _emailErrorMessage = "Por favor, ingresa un correo electrónico válido.";
+                      _phoneErrorMessage = "";
+                      _passwordErrorMessage = "";
+                    });
+                    return;
+                  }
+
+                  if (_phoneTextController.text.length != 10) {
+                    setState(() {
+                      _emailErrorMessage = "";
+                      _phoneErrorMessage = "Por favor, ingresa un número de celular válido (10 dígitos).";
+                      _passwordErrorMessage = "";
+                    });
+                    return;
+                  }
+
+                  // Resto del código de registro
                   FirebaseAuth.instance
                       .createUserWithEmailAndPassword(
-                    email: _emailTextController.text,
-                    password: _passwordTextController.text,
-                  )
+                        email: _emailTextController.text,
+                        password: _passwordTextController.text,
+                      )
                       .then((value) {
-                    print("Nueva cuenta creada");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainWidget()),
-                    );
-                  }).onError((error, stackTrace) {
-                    setState(() {
-                      _errorMessage = "Error: ${error.toString()}";
-                    });
-                  });
+                        print("Nueva cuenta creada");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainWidget()),
+                        );
+                      })
+                      .onError((error, stackTrace) {
+                        setState(() {
+                          _emailErrorMessage = "";
+                          _phoneErrorMessage = "";
+                          _passwordErrorMessage = "Error: ${error.toString()}";
+                        });
+                      });
                 }),
               ],
             ),
