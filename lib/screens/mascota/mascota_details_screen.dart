@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MascotaDetailsScreen extends StatelessWidget {
-  static const routeName = '/mascota-details';
-  //final String pokemonId;
+  static const routeName = '/mascota-details/';
+  //final int mascotaId;
 
-  const MascotaDetailsScreen({super.key});
+  const MascotaDetailsScreen({super.key,});
 
   Widget _getMascotaNameWidget(Mascota mascota) {
     return Expanded(
