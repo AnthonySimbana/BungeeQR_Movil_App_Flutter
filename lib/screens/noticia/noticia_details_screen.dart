@@ -17,7 +17,7 @@ class NoticiaDetailsScreen extends StatelessWidget {
         style: const TextStyle(
           fontWeight: FontWeight.w600,
           color: Colors.blue,
-          fontSize: 20,
+          fontSize: 21,
         ),
       ),
     );
