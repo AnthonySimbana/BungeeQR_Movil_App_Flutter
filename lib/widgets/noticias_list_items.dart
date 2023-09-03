@@ -47,7 +47,7 @@ class _NoticiaListItemsState extends State<NoticiaListItems> {
                               widget.noticias[index].fecha,
                             ), //Formatear Fecha
                             style: TextStyle(
-                                fontSize: 15, color: hexStringToColor('#4A43EC'),fontWeight: FontWeight.bold)),
+                                fontSize:12, color: hexStringToColor('#4A43EC'),fontWeight: FontWeight.bold)),
                         Text(widget.noticias[index].descripcion),
                       ]),
                 ),

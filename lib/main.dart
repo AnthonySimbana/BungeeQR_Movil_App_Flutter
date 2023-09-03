@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
         title: 'BungeeQR',
         home: const AuthenticationWrapper(),
         theme: ThemeData(
-          primaryColor: hexStringToColor('#4A43EC'),
-          iconTheme: IconThemeData(color: hexStringToColor('#4A43EC')),
+          primaryColor: AppColors.primaryColor,
+          iconTheme: IconThemeData(color: AppColors.primaryColor),
           fontFamily: 'Roboto',
         ),
         //initialRoute: MainWidget.routeName,
