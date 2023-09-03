@@ -37,10 +37,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   _inicializarControladores() {
     final userProvider = Provider.of<UsuarioProvider>(context);
-    nombreController.text = userProvider.getNombreUsuario() ?? '';
-    correoController.text = userProvider.getCorreoUsuario() ?? '';
-    telefonoController.text = userProvider.getTelefonoUsuario() ?? '';
-    imagenUrlController.text = userProvider.getImagenUrlUsuario() ?? '';
+    nombreController.text = userProvider.getNombreUsuario();
+    correoController.text = userProvider.getCorreoUsuario();
+    telefonoController.text = userProvider.getTelefonoUsuario();
+    imagenUrlController.text = userProvider.getImagenUrlUsuario();
   }
 
   @override

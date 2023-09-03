@@ -5,13 +5,17 @@ import 'package:app_movil/dtos/usuario_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class UsuarioProvider extends ChangeNotifier {
-  Usuario? _usuario;
+  Usuario usuario = Usuario(
+      uid: '', nombre: 'MARTIN', telefono: '', correo: '', imageUrl: '');
 
   Future<bool> checkUsuario() async {
-    if (_usuario == null) {
+    await _initUsuario();
+    /*
+    if (usuario == null) {
       print('Usuario vacio');
 
       await _initUsuario();
@@ -20,6 +24,8 @@ class UsuarioProvider extends ChangeNotifier {
     print('Usuario con datos');
 
     return false;
+    */
+    return true;
   }
 
   Future<void> _initUsuario() async {
@@ -43,7 +49,26 @@ class UsuarioProvider extends ChangeNotifier {
           userData.forEach((key, value) {
             print('$key: $value');
           });
-          _usuario = Usuario.fromFirebaseJson(userData);
+
+          print(userData['uid']);
+          print(userData['nombre']);
+          print(userData['telefono']);
+          print(userData['correo']);
+
+          usuario.setUidUsuario(userData['uid']);
+          usuario.setNombreUsuario(userData['nombre']);
+          usuario.setTelefonoUsuario(userData['telefono']);
+          usuario.setCorreoUsuario(userData['correo']);
+          usuario.setImagenUrlUsuario(userData['imageUrl']);
+          print('Aqu se imprime lo restante');
+
+          print(usuario.getCorreoUsuario());
+          print(usuario.getImagenUrlUsuario());
+          print(usuario.getCorreoUsuario());
+          print(usuario.getCorreoUsuario());
+          print(usuario.getCorreoUsuario());
+          print('Hola hdm');
+          // usuario = Usuario.fromFirebaseJson(userData);
         } else {
           // El documento no existe
           print('Error, el usuario no existe');
@@ -55,20 +80,20 @@ class UsuarioProvider extends ChangeNotifier {
     }
   }
 
-  String? getNombreUsuario() {
-    return _usuario?.nombre;
+  String getNombreUsuario() {
+    return usuario.nombre;
   }
 
-  String? getTelefonoUsuario() {
-    return _usuario?.telefono;
+  String getTelefonoUsuario() {
+    return usuario.telefono;
   }
 
-  String? getCorreoUsuario() {
-    return _usuario?.correo;
+  String getCorreoUsuario() {
+    return usuario.correo;
   }
 
-  String? getImagenUrlUsuario() {
-    return _usuario?.imageUrl;
+  String getImagenUrlUsuario() {
+    return usuario.imageUrl;
   }
 
 //Metodo que permite agregar comentario a a base de datos en FireStore

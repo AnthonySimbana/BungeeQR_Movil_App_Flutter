@@ -36,11 +36,11 @@ class Usuario {
   // Constructor de fábrica utilizado para crear una instancia de Usuario a partir de un mapa JSON proveniente de Firebase
   factory Usuario.fromFirebaseJson(Map<String, dynamic> json) {
     return Usuario(
-      uid: json['uid'] ?? '',
-      nombre: json['nombre'] ?? '',
-      telefono: json['telefono'] ?? '',
-      correo: json['correo'] ?? '',
-      imageUrl: json['imageUrl'] ?? '',
+      uid: json['uid'],
+      nombre: json['nombre'],
+      telefono: json['telefono'],
+      correo: json['correo'],
+      imageUrl: json['imageUrl'],
     );
   }
 
@@ -52,4 +52,40 @@ class Usuario {
         'correo': correo,
         'imageUrl': imageUrl,
       };
+
+  void setUidUsuario(String uid) {
+    this.uid = uid;
+  }
+
+  void setNombreUsuario(String nombre) {
+    this.nombre = nombre;
+  }
+
+  void setTelefonoUsuario(String telefono) {
+    this.telefono = telefono;
+  }
+
+  void setCorreoUsuario(String correo) {
+    this.correo = correo;
+  }
+
+  void setImagenUrlUsuario(String imagenUrl) {
+    this.imageUrl = imagenUrl;
+  }
+
+  String getNombreUsuario() {
+    return this.nombre;
+  }
+
+  String getTelefonoUsuario() {
+    return this.telefono;
+  }
+
+  String getCorreoUsuario() {
+    return this.correo;
+  }
+
+  String getImagenUrlUsuario() {
+    return this.imageUrl;
+  }
 }
