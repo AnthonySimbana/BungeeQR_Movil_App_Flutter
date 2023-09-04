@@ -50,23 +50,24 @@ class UsuarioProvider extends ChangeNotifier {
             print('$key: $value');
           });
 
-          print(userData['uid']);
-          print(userData['nombre']);
-          print(userData['telefono']);
-          print(userData['correo']);
+          String uidAux = (userData['uid']);
+          String nombreAux = (userData['nombre']);
+          String telefonoAux = (userData['telefono']);
+          String correoAux = (userData['correo']);
+          String imagenUrlAux = userData['imagenUrl'];
 
-          usuario.setUidUsuario(userData['uid']);
-          usuario.setNombreUsuario(userData['nombre']);
-          usuario.setTelefonoUsuario(userData['telefono']);
-          usuario.setCorreoUsuario(userData['correo']);
-          usuario.setImagenUrlUsuario(userData['imageUrl']);
+          usuario.setUidUsuario(uidAux);
+          usuario.setNombreUsuario(nombreAux);
+          usuario.setTelefonoUsuario(telefonoAux);
+          usuario.setCorreoUsuario(correoAux);
+          usuario.setImagenUrlUsuario(imagenUrlAux);
           print('Aqu se imprime lo restante');
 
-          print(usuario.getCorreoUsuario());
-          print(usuario.getImagenUrlUsuario());
-          print(usuario.getCorreoUsuario());
-          print(usuario.getCorreoUsuario());
-          print(usuario.getCorreoUsuario());
+          print(usuario.getCorreoUsuario().toString());
+          print(usuario.getImagenUrlUsuario().toString());
+          print(usuario.getCorreoUsuario().toString());
+          print(usuario.getCorreoUsuario().toString());
+          print(usuario.getCorreoUsuario().toString());
           print('Hola hdm');
           // usuario = Usuario.fromFirebaseJson(userData);
         } else {

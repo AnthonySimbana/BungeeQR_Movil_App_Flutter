@@ -13,25 +13,6 @@ class Usuario {
     required this.correo,
     required this.imageUrl,
   });
-/*
-  Usuario(){
-     this.uid = '',
-     this.nombre = '',
-     this.telefono = '' ,
-     this.correo= '',
-     this.imageUrl= ''
-  }
-*/
-  // Constructor de fábrica utilizado para crear una instancia de Usuario a partir de un mapa JSON
-  factory Usuario.fromJson(Map<String, dynamic> json) {
-    return Usuario(
-      uid: json['uid'],
-      nombre: json['nombre'],
-      telefono: json['telefono'],
-      correo: json['correo'],
-      imageUrl: json['sprites']['front_default'],
-    );
-  }
 
   // Constructor de fábrica utilizado para crear una instancia de Usuario a partir de un mapa JSON proveniente de Firebase
   factory Usuario.fromFirebaseJson(Map<String, dynamic> json) {

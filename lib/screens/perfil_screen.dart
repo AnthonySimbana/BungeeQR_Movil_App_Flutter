@@ -28,6 +28,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     telefonoController.text =
         'Telefono'; // Reemplaza con el teléfono real del usuario
     imagenUrlController.text = 'ImagenUrl';
+    //_cargarUsuario();
+    //_inicializarControladores();
   }
 
   _cargarUsuario() {
