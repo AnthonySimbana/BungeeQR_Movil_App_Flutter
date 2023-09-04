@@ -14,17 +14,6 @@ class UsuarioProvider extends ChangeNotifier {
 
   Future<bool> checkUsuario() async {
     await _initUsuario();
-    /*
-    if (usuario == null) {
-      print('Usuario vacio');
-
-      await _initUsuario();
-      return true;
-    }
-    print('Usuario con datos');
-
-    return false;
-    */
     return true;
   }
 

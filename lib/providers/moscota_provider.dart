@@ -26,8 +26,8 @@ class MascotaProvider extends ChangeNotifier {
     final normalizedSearch = name.toLowerCase(); //Tranformar a minusculas
 
     _mascota = _originalMascotas
-        .where((element) => element.nombre.toLowerCase().
-        contains(normalizedSearch))
+        .where((element) =>
+            element.nombre.toLowerCase().contains(normalizedSearch))
         .toList();
     notifyListeners();
   }
@@ -77,9 +77,6 @@ class MascotaProvider extends ChangeNotifier {
     var response = await client.get(Uri.parse(url));
     var mascotaData = jsonDecode(response.body);
     print('Procesando: $url');
-
-    _mascota.add(Mascota.fromJson(mascotaData)); //Agrega
-    _originalMascotas.add(Mascota.fromJson(mascotaData));
 
     final pokemonDocument = <String, dynamic>{
       //'id': mascotaData['id'],

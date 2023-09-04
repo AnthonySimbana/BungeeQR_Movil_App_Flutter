@@ -18,19 +18,6 @@ class Mascota {
     required this.imageUrl,
   });
 
-  // Constructor de fábrica utilizado para crear una instancia de Mascota a partir de un mapa JSON
-  factory Mascota.fromJson(Map<String, dynamic> json) {
-    return Mascota(
-      id: json['id'],
-      nombre: json['nombre'],
-      especie: json['especie'],
-      genero: json['genero'],
-      edad: json['edad'],
-      descripcion: json['descripcion'],
-      imageUrl: json['sprites']['front_default'],
-    );
-  }
-
   // Constructor de fábrica utilizado para crear una instancia de Mascota a partir de un mapa JSON proveniente de Firebase
   factory Mascota.fromFirebaseJson(Map<String, dynamic> json) {
     return Mascota(

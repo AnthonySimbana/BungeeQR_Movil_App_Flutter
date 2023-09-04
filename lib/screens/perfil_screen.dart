@@ -16,11 +16,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   TextEditingController correoController = TextEditingController();
   TextEditingController telefonoController = TextEditingController();
   TextEditingController imagenUrlController = TextEditingController();
+  //late final Provider userProvider;
 
   @override
   void initState() {
-    super.initState();
-
     // Inicializa los controladores de texto con los datos actuales del usuario
     nombreController.text = 'Nombre';
     correoController.text =
@@ -30,14 +29,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     imagenUrlController.text = 'ImagenUrl';
     //_cargarUsuario();
     //_inicializarControladores();
+    //_cargarUsuario();
+    super.initState();
   }
 
-  _cargarUsuario() {
-    Provider.of<UsuarioProvider>(context).checkUsuario();
+  Future<void> _cargarUsuario() async {
+    await Provider.of<UsuarioProvider>(context).checkUsuario();
     //_inicializarControladores();
   }
 
   _inicializarControladores() {
+    _cargarUsuario();
     final userProvider = Provider.of<UsuarioProvider>(context);
     nombreController.text = userProvider.getNombreUsuario();
     correoController.text = userProvider.getCorreoUsuario();
@@ -45,11 +47,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     imagenUrlController.text = userProvider.getImagenUrlUsuario();
   }
 
+  Future<void> reloadData() async {
+    await _inicializarControladores();
+  }
+
   @override
   Widget build(BuildContext context) {
     //Se trae a informacion del usuario
-    _cargarUsuario();
-    _inicializarControladores();
+    //_cargarUsuario();
+    //await_inicializarControladores();
+    reloadData();
     //Crear el proveedor del usuario y trae su informacion
     /*
     final userProvider = Provider.of<UsuarioProvider>(context);
