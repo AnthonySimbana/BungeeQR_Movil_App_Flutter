@@ -1,4 +1,5 @@
 import 'package:app_movil/providers/usuario_provider.dart';
+import 'package:app_movil/widgets/reusable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,6 +52,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     await _inicializarControladores();
   }
 
+  void _onTap() {
+    setState(() {
+      isEditing =
+          !isEditing; // Cambia el estado de edición al presionar el botón
+    });
+  }
+
+  void _cancelar() {
+    setState(() {
+      isEditing = false;
+    });
+  }
+
+  void _actualizar() {}
+
   @override
   Widget build(BuildContext context) {
     //Se trae a informacion del usuario
@@ -76,68 +92,64 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     // Reemplaza con la URL real de la imagen
                     radius: 60.0,
                   ),
-                  Text(nombreController.text),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
+                  //Nombre del usuario
+                  Text(
+                    nombreController.text,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold, // Negrita
+                      fontSize:
+                          20, // Tamaño de letra más grande (ajusta según tu preferencia)
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
 
                   // Botón para editar perfil
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        isEditing =
-                            !isEditing; // Cambia el estado de edición al presionar el botón
-                      });
-                    },
-                    icon: Icon(Icons.edit),
-                    label: Text('Editar perfil'),
+                  SizedBox(
+                    width: 200,
+                    child: noPressedButton(context, 'Editar perfil', _onTap,
+                        Icons.edit_note_outlined),
                   ),
-                  SizedBox(height: 16.0),
 
-                  // Campos de correo y teléfono (editables o no según el estado de edición)
-                  TextFormField(
-                    controller: correoController,
-                    readOnly:
-                        !isEditing, // Hace el campo de texto no editable si no se está editando
-                    decoration: const InputDecoration(
-                      labelText: 'Correo electronico',
-                      border: OutlineInputBorder(),
+                  const SizedBox(height: 20.0),
+
+                  const Align(
+                    alignment:
+                        Alignment.centerLeft, // Alineación a la izquierda
+                    child: Text(
+                      'Mi información',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: telefonoController,
-                    readOnly:
-                        !isEditing, // Hace el campo de texto no editable si no se está editando
-                    decoration: InputDecoration(
-                      labelText: 'Telefono',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
+
+                  // Campos de correo (editables o no según el estado de edición)
+                  reusableTextFormField('Correo', Icons.mail_outline,
+                      correoController, isEditing),
+                  const SizedBox(height: 16.0),
+
+                  // Campos de teléfono (editables o no según el estado de edición)
+                  reusableTextFormField('Telefono', Icons.phone_iphone_rounded,
+                      telefonoController, isEditing),
+                  const SizedBox(height: 25.0),
 
                   // Botones Cancelar y Actualizar (visibles solo cuando se está editando)
                   if (isEditing)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isEditing =
-                                  false; // Cancela la edición y vuelve al modo de visualización
-                            });
-                          },
-                          child: Text('Cancelar'),
+                        SizedBox(
+                          width: 150,
+                          child:
+                              noPressedButton(context, 'Cancelar', _cancelar),
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Aquí debes implementar la lógica para actualizar los datos del usuario
-                            // Puedes utilizar correoController.text y telefonoController.text para obtener los nuevos valores
-                            // Después de actualizar, cambia isEditing a false para volver al modo de visualización
-                            setState(() {
-                              isEditing = false;
-                            });
-                          },
-                          child: Text('Actualizar'),
+                        SizedBox(
+                          width: 150,
+                          child: firebaseUIButton(
+                              context, 'Actualizar', _actualizar),
                         ),
                       ],
                     )
