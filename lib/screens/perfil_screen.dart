@@ -38,7 +38,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     //_inicializarControladores();
   }
 
-  _inicializarControladores() {
+  Future<void> _inicializarControladores() async {
     _cargarUsuario();
     final userProvider = Provider.of<UsuarioProvider>(context);
     nombreController.text = userProvider.getNombreUsuario();
@@ -55,7 +55,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     //Se trae a informacion del usuario
     //_cargarUsuario();
-    //await_inicializarControladores();
+    _inicializarControladores();
     reloadData();
     //Crear el proveedor del usuario y trae su informacion
     /*

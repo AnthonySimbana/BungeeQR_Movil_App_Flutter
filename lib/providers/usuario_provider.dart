@@ -17,6 +17,12 @@ class UsuarioProvider extends ChangeNotifier {
     return true;
   }
 
+  User? getUser() {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final User? user = _auth.currentUser;
+    return user;
+  }
+
   Future<void> _initUsuario() async {
     try {
       final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -97,6 +103,27 @@ class UsuarioProvider extends ChangeNotifier {
         );
   }
 
+  void crearPerfilUsuario(
+      String? uid, String nombre, String mail, String phone, String imageUrl) {
+    var db = FirebaseFirestore.instance;
+
+    Usuario usuario = Usuario(
+      uid: uid,
+      nombre: nombre,
+      correo: mail,
+      telefono: phone,
+      imageUrl: imageUrl,
+    );
+// Convertir el objeto Usuario a un mapa
+    Map<String, Object?> userData = usuario.toJson();
+
+    // Utilizar el ID de usuario como identificador del documento
+    db.collection('usuarios').doc(uid).set(userData).then((_) {
+      print('Documento de usuario creado con éxito');
+    }).catchError((error) {
+      print('Error al crear el documento de usuario: $error');
+    });
+  }
 /*
   Future<void> addNoticiaList(String url) async {
 

@@ -1,5 +1,5 @@
 class Usuario {
-  String uid;
+  String? uid;
   String nombre;
   String telefono;
   String correo;
@@ -31,7 +31,7 @@ class Usuario {
         'nombre': nombre,
         'telefono': telefono,
         'correo': correo,
-        'imageUrl': imageUrl,
+        'imagenUrl': imageUrl,
       };
 
   void setUidUsuario(String uid) {
