@@ -3,9 +3,9 @@ import 'package:app_movil/screens/mascota/mascota_screen.dart';
 import 'package:app_movil/screens/noticia/noticias_screen.dart';
 import 'package:app_movil/screens/perfil_screen.dart';
 import 'package:app_movil/screens/mascota/registrar_mascota_screen.dart';
-import 'package:app_movil/screens/scanner_qr_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/scaneer_qr_screen.dart';
 import '../utils/color_utils.dart';
 import 'nav_bar.dart';
 

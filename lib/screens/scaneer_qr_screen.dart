@@ -20,10 +20,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Escanear Qr',
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text(
             'Escanear Qr',
@@ -44,7 +41,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
           onPressed: scanQr,
           child: const Icon(Icons.camera),
         ),
-      ),
     );
   }
 }
