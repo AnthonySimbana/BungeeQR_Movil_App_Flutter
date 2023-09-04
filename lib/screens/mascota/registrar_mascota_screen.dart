@@ -1,3 +1,5 @@
+import 'package:app_movil/widgets/add_imagen.dart';
+import 'package:app_movil/widgets/reusable_widget.dart';
 import 'package:flutter/material.dart';
 
 class RegistrarMascotaScreen extends StatefulWidget {
@@ -7,81 +9,80 @@ class RegistrarMascotaScreen extends StatefulWidget {
 
 class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
   final _formKey = GlobalKey<FormState>();
-  String nombre = '';
-  String especie = '';
-  String genero = '';
-  int edad = 0;
-  String descripcion = '';
-  String imageUrl = '';
+  var imagenUrlController = TextEditingController();
+  var nombreController = TextEditingController();
+  var especieController = TextEditingController();
+  var generoController = TextEditingController();
+  var edadController = TextEditingController();
+  var descripcionController = TextEditingController();
+
+  onTap() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      // Aquí puedes hacer algo con los datos ingresados,
+      // como guardarlos en una base de datos.
+      // Luego, puedes navegar a otra pantalla o realizar
+      // la acción que desees.
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Nombre'),
-                validator: (value) {
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                AddImagenWidget(imageUrl: '', icon: Icons.add),
+                const SizedBox(height: 15),
+                reusableTextFormField('Nombre de la mascota *', Icons.edit,
+                    nombreController, true, (value) {
+                  // Puedes personalizar la lógica de validación según tus requisitos.
                   if (value == null || value.isEmpty) {
-                    return 'Por favor, ingresa el nombre de la mascota.';
+                    return 'Por favor, ingresa un nombre';
                   }
-                  return null;
-                },
-                onSaved: (value) {
-                  nombre = value!;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Especie'),
-                onSaved: (value) {
-                  especie = value!;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Género'),
-                onSaved: (value) {
-                  genero = value!;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Edad'),
-                keyboardType: TextInputType.number,
-                onSaved: (value) {
-                  edad = int.parse(value!);
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Descripción'),
-                maxLines: 3,
-                onSaved: (value) {
-                  descripcion = value!;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'URL de la Imagen'),
-                onSaved: (value) {
-                  imageUrl = value!;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // Aquí puedes hacer algo con los datos ingresados,
-                    // como guardarlos en una base de datos.
-                    // Luego, puedes navegar a otra pantalla o realizar
-                    // la acción que desees.
-                    
+                  return null; // Retorna null si la validación es exitosa
+                }, TextInputType.name),
+                const SizedBox(height: 15),
+                reusableTextFormField(
+                    'Especie *', Icons.edit, especieController, true, (value) {
+                  // Puedes personalizar la lógica de validación según tus requisitos.
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa una especie';
                   }
-                },
-                child: Text('Guardar'),
-              ),
-            ],
+                  return null; // Retorna null si la validación es exitosa
+                }, TextInputType.name),
+                const SizedBox(height: 15),
+                reusableTextFormField(
+                    'Genero *', Icons.edit, generoController, true, (value) {
+                  // Puedes personalizar la lógica de validación según tus requisitos.
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa el género';
+                  }
+                  return null; // Retorna null si la validación es exitosa
+                }, TextInputType.name),
+                const SizedBox(height: 15),
+                reusableTextFormField(
+                    'Edad *', Icons.edit, edadController, true, (value) {
+                  // Puedes personalizar la lógica de validación según tus requisitos.
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa la edad';
+                  }
+                  return null; // Retorna null si la validación es exitosa
+                }, TextInputType.number),
+                const SizedBox(height: 15),
+                reusableTextFormField(
+                    'Descripcion', Icons.edit, descripcionController, true,
+                    (value) {
+                  return null; // Retorna null si la validación es exitosa
+                }, TextInputType.name),
+                SizedBox(height: 20),
+                firebaseUIButton(context, 'Guardar', onTap),
+              ],
+            ),
           ),
         ),
       ),

@@ -48,6 +48,8 @@ TextFormField reusableTextFormField(
   IconData icon,
   TextEditingController controller,
   bool isEditing,
+  String? Function(String?)? validator,
+  TextInputType? keybiardType,
 ) {
   return TextFormField(
     controller: controller,
@@ -76,7 +78,8 @@ TextFormField reusableTextFormField(
       ),
     ),
     //onSaved: onSaved,
-    //validator: validator,
+    validator: validator,
+    keyboardType: keybiardType,
   );
 }
 

@@ -66,7 +66,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 children: [
                   const SizedBox(height: 16.0),
                   //Widget imagen de usuario
-                  AddImagenWidget(imageUrl: imagenUrlController.text),
+                  AddImagenWidget(
+                      imageUrl: imagenUrlController.text, icon: Icons.edit),
                   const SizedBox(height: 16.0),
 
                   //Widget del nombre del usuario
@@ -104,13 +105,37 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
                   //Widgets de campos
                   // Campos de correo (editables o no según el estado de edición)
-                  reusableTextFormField('Correo', Icons.mail_outline,
-                      correoController, isEditing),
+                  reusableTextFormField(
+                    'Correo',
+                    Icons.mail_outline,
+                    correoController,
+                    isEditing,
+                    (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor, ingresa un correo válido.';
+                      }
+                      return null;
+                    },
+                    TextInputType.emailAddress,
+                  ),
                   const SizedBox(height: 16.0),
 
                   // Campos de teléfono (editables o no según el estado de edición)
-                  reusableTextFormField('Telefono', Icons.phone_iphone_rounded,
-                      telefonoController, isEditing),
+                  reusableTextFormField(
+                    'Teléfono',
+                    Icons.phone_iphone_rounded,
+                    telefonoController,
+                    isEditing,
+                    (value) {
+                      // Puedes personalizar la lógica de validación según tus requisitos.
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor, ingresa un número de teléfono válido.';
+                      }
+                      return null; // Retorna null si la validación es exitosa
+                    },
+                    TextInputType
+                        .phone, // Especifica el tipo de teclado como TextInputType.phone
+                  ),
                   const SizedBox(height: 25.0),
 
                   //Widgets botones cancelar o actualizar segun estado de edicion

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class AddImagenWidget extends StatefulWidget {
   final String imageUrl;
+  final IconData icon; // Agrega este atributo
 
-  AddImagenWidget({required this.imageUrl});
+  AddImagenWidget({required this.imageUrl, required this.icon});
 
   @override
   _AddImagenWidget createState() => _AddImagenWidget();
@@ -32,7 +33,11 @@ class _AddImagenWidget extends State<AddImagenWidget> {
               borderRadius: BorderRadius.circular(100),
               color: Colors.purple,
             ),
-            child: const Icon(Icons.edit, color: Colors.white, size: 20),
+            child: Icon(
+              widget.icon, // Utiliza el ícono especificado
+              color: Colors.white,
+              size: 20,
+            ),
           ),
         ),
       ],
