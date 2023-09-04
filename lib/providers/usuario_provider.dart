@@ -28,9 +28,9 @@ class UsuarioProvider extends ChangeNotifier {
       final FirebaseAuth _auth = FirebaseAuth.instance;
       final User? user = _auth.currentUser;
       if (user != null) {
-        print('Usuario no null');
+        //print('Usuario no null');
         String? uid = _auth.currentUser?.uid; //uid del usuario actual
-        print(uid);
+        //print(uid);
 
         final userDoc = await FirebaseFirestore.instance
             .collection('usuarios')
@@ -39,11 +39,11 @@ class UsuarioProvider extends ChangeNotifier {
 
         if (userDoc.exists) {
           // El documento existe, obtén los datos del usuario
-          print('EL documento existe');
+          //print('EL documento existe');
           var userData = userDoc.data() as Map<String, dynamic>;
-          userData.forEach((key, value) {
-            print('$key: $value');
-          });
+          //userData.forEach((key, value) {
+          //  print('$key: $value');
+          //});
 
           String uidAux = (userData['uid']);
           String nombreAux = (userData['nombre']);
@@ -51,13 +51,17 @@ class UsuarioProvider extends ChangeNotifier {
           String correoAux = (userData['correo']);
           String imagenUrlAux = userData['imagenUrl'];
 
+          usuario = Usuario.fromFirebaseJson(userData);
+          /*
           usuario.setUidUsuario(uidAux);
           usuario.setNombreUsuario(nombreAux);
           usuario.setTelefonoUsuario(telefonoAux);
           usuario.setCorreoUsuario(correoAux);
           usuario.setImagenUrlUsuario(imagenUrlAux);
+          */
+          /*
           print('Aqu se imprime lo restante');
-
+          print('NUEVAS ACTUALIZACIONES');
           print(usuario.getCorreoUsuario().toString());
           print(usuario.getImagenUrlUsuario().toString());
           print(usuario.getCorreoUsuario().toString());
@@ -65,6 +69,7 @@ class UsuarioProvider extends ChangeNotifier {
           print(usuario.getCorreoUsuario().toString());
           print('Hola hdm');
           // usuario = Usuario.fromFirebaseJson(userData);
+          */
         } else {
           // El documento no existe
           print('Error, el usuario no existe');

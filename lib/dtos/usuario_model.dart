@@ -21,7 +21,7 @@ class Usuario {
       nombre: json['nombre'],
       telefono: json['telefono'],
       correo: json['correo'],
-      imageUrl: json['imageUrl'],
+      imageUrl: json['imagenUrl'],
     );
   }
 

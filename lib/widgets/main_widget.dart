@@ -1,9 +1,11 @@
+import 'package:app_movil/providers/usuario_provider.dart';
 import 'package:app_movil/screens/mascota/mascota_details_screen.dart';
 import 'package:app_movil/screens/mascota/mascota_screen.dart';
 import 'package:app_movil/screens/noticia/noticias_screen.dart';
 import 'package:app_movil/screens/perfil/perfil_screen.dart';
 import 'package:app_movil/screens/mascota/registrar_mascota_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/scaneerqr/scaneer_qr_screen.dart';
 import '../utils/color_utils.dart';
@@ -22,12 +24,23 @@ class MainWidget extends StatefulWidget {
 class _MainWidgetState extends State<MainWidget> {
   int _selectedIndex = 0;
 
+  // Define una variable para el UsuarioProvider
+  late UsuarioProvider _usuarioProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    // Inicializa el UsuarioProvider aquí
+    _usuarioProvider = UsuarioProvider();
+  }
+
   final List<Widget> _mainWidgets = [
     const NoticiaScreen(),
     const MascotaScreen(),
     RegistrarMascotaScreen(),
     ScannerScreen(),
     UserProfileScreen()
+    //UserProfileScreen(usuarioProvider: _usuarioProvider),
   ];
 
   final List<String> _titles = const [
@@ -41,6 +54,7 @@ class _MainWidgetState extends State<MainWidget> {
   void _onTapItem(int index) {
     setState(() {
       _selectedIndex = index;
+      //_cargarUsuario();
     });
   }
 
