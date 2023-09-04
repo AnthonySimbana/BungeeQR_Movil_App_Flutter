@@ -1,3 +1,4 @@
+import 'package:app_movil/widgets/qr_widget.dart';
 import 'package:flutter/material.dart';
 import '../dtos/mascota_model.dart';
 import '../screens/mascota/mascota_details_screen.dart';
@@ -9,6 +10,9 @@ class MascotaListItems extends StatefulWidget {
   @override
   State<MascotaListItems> createState() => _MascotaListItemsState();
 }
+
+final String data = "http://placekitten.com/200/300";
+
 
 class _MascotaListItemsState extends State<MascotaListItems> {
   @override
@@ -23,9 +27,7 @@ class _MascotaListItemsState extends State<MascotaListItems> {
                   arguments: widget.mascotas[index]
                       .id) //'widget' es para usar atributos de la clase
             },
-            child: Container(
-              height: 115, //altura de cada elemento,
-              child: Card(
+            child: Card(
                 elevation: 10,
                 child: ListTile(
                   contentPadding: EdgeInsets.all(10),
@@ -40,7 +42,7 @@ class _MascotaListItemsState extends State<MascotaListItems> {
                   //     ),
                   //   ),
                   leading: AspectRatio(
-                    aspectRatio: 2,
+                    aspectRatio: 1.75,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(2.0),
                       child: Image.network('http://placekitten.com/200/300',
@@ -49,14 +51,40 @@ class _MascotaListItemsState extends State<MascotaListItems> {
                   ),
 
                   title: Text(widget.mascotas[index].nombre,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Tipo: ${widget.mascotas[index].especie}'),
-                        Text('Sexo: ${widget.mascotas[index].genero}'),
-                        Text('Edad: ${widget.mascotas[index].edad}'),
-                      ]),
+                    style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16)),
+                   
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.mascotas[index].especie, ),
+                          const SizedBox(height: 6.0),
+                          Text(widget.mascotas[index].genero),
+                          const SizedBox(height: 6.0),
+                          Text(widget.mascotas[index].edad),
+                          const SizedBox(
+                              height: 6.0), // Agregar espacio entre los textos
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [ Container(
+                        alignment: Alignment.center,
+                        
+                        width: 85.0, // Ancho fijo del código QR
+                        child: QrWidget(
+                          data: data,
+                          //data: widget.mascotas[index].qrData,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                  ),
+                      
                   trailing: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -75,7 +103,6 @@ class _MascotaListItemsState extends State<MascotaListItems> {
                   ),
                 ),
               ),
-            ),
           ),
         );
       },
