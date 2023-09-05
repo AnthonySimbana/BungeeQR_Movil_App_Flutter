@@ -1,7 +1,9 @@
 import 'package:app_movil/dtos/mascota_model.dart';
 import 'package:app_movil/providers/moscota_provider.dart';
+import 'package:app_movil/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 class MascotaDetailsScreen extends StatelessWidget {
   static const routeName = '/mascota-details';
@@ -13,9 +15,9 @@ class MascotaDetailsScreen extends StatelessWidget {
     return Expanded(
       child: Text(
         mascota.nombre,
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: Colors.blue,
+          color: AppColors.primaryColor,
           fontSize: 20,
         ),
       ),

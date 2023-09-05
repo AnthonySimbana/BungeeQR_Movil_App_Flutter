@@ -25,8 +25,8 @@ class NoticiaProvider extends ChangeNotifier {
   void searchNoticasByDescription(String name) {
     final normalizedSearch = name.toLowerCase(); //Tranformar a minusculas
     _noticia = _originalNoticias
-        .where((element) => element.descripcion.toLowerCase().
-        contains(normalizedSearch))
+        .where((element) =>
+            element.descripcion.toLowerCase().contains(normalizedSearch))
         .toList();
     notifyListeners();
   }
@@ -71,31 +71,5 @@ class NoticiaProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addNoticiaList(String url) async {
-    var client = http.Client();
-    var response = await client.get(Uri.parse(url));
-    var noticiaData = jsonDecode(response.body);
-    print('Procesando: $url');
-
-    _noticia.add(Noticia.fromJson(noticiaData)); //Agrega
-    _originalNoticias.add(Noticia.fromJson(noticiaData));
-
-    final pokemonDocument = <String, dynamic>{
-      //'id': noticiaData['id'],
-      'name': noticiaData['name'],
-      'id': noticiaData['id'],
-      'imageUrl': noticiaData['sprites']['front_default']
-    };
-
-    var db = FirebaseFirestore.instance;
-
-    //Crea la base de datos donde el ID ya no es autogenerado, y si encuentra reemplaza su informacion si no encuentra más,
-    //pasa un marge y actualiza/añade info
-    var setOptions = SetOptions(merge: true);
-    db
-        .collection("noticias")
-        .doc(noticiaData['id'].toString())
-        .set(pokemonDocument, setOptions) //
-        .then((value) => print("Success"));
-  }
+  Future<void> addNoticiaList(String url) async {}
 }

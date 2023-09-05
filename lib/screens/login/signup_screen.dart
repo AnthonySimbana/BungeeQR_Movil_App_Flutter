@@ -1,10 +1,14 @@
+import 'package:app_movil/providers/usuario_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app_movil/widgets/reusable_widget.dart';
 import 'package:app_movil/widgets/main_widget.dart';
 import 'package:app_movil/utils/color_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
+  //final UsuarioProvider usuarioProvider;
+
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
@@ -18,6 +22,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _phoneTextController = TextEditingController();
 
   String _errorMessage = ""; // Variable para mostrar mensajes de error
+
+  bool _verificarDatos() {
+    if (_userNameTextController.text.isEmpty ||
+        _emailTextController.text.isEmpty ||
+        _passwordTextController.text.isEmpty ||
+        _passwordTextController.text.isEmpty) {
+      setState(() {
+        _errorMessage = "Por favor, completa todos los campos.";
+      });
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  crearPerfilUsuario(
+      String? uid, String nombre, String mail, String phone, String imageUrl) {
+    Provider.of<UsuarioProvider>(context, listen: false)
+        .crearPerfilUsuario(uid, nombre, mail, phone, imageUrl);
+  }
+
+  crearCuenta(String email, String password) {
+    FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,32 +118,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: TextStyle(color: Colors.red),
                 ),
                 firebaseUIButton(context, "Crear cuenta", () {
-                  if (_userNameTextController.text.isEmpty ||
-                      _emailTextController.text.isEmpty ||
-                      _passwordTextController.text.isEmpty ||
-                      _passwordTextController.text.isEmpty) {
-                    setState(() {
-                      _errorMessage = "Por favor, completa todos los campos.";
-                    });
-                    return;
-                  }
+                  if (_verificarDatos()) {
+                    FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                      email: _emailTextController.text,
+                      password: _passwordTextController.text,
+                    )
+                        .then((value) {
+                      print("Nueva cuenta creada");
 
-                  FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                    email: _emailTextController.text,
-                    password: _passwordTextController.text,
-                  )
-                      .then((value) {
-                    print("Nueva cuenta creada");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainWidget()),
-                    );
-                  }).onError((error, stackTrace) {
-                    setState(() {
-                      _errorMessage = "Error: ${error.toString()}";
+                      final FirebaseAuth _auth = FirebaseAuth.instance;
+                      final User? user = _auth.currentUser;
+
+                      String? uid = user?.uid;
+                      print('Aqui deberia obtener mi uid: $uid ');
+
+                      crearPerfilUsuario(
+                          uid,
+                          _userNameTextController.text,
+                          _emailTextController.text,
+                          _phoneTextController.text,
+                          "http://placekitten.com/200/200");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainWidget()),
+                      );
+                    }).onError((error, stackTrace) {
+                      setState(() {
+                        _errorMessage = "Error: ${error.toString()}";
+                        //The email address is badly formatted
+                      });
                     });
-                  });
+                  }
                 }),
               ],
             ),

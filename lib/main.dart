@@ -1,8 +1,10 @@
 import 'package:app_movil/providers/moscota_provider.dart';
 import 'package:app_movil/providers/noticia_provider.dart';
+import 'package:app_movil/providers/usuario_provider.dart';
 import 'package:app_movil/screens/login/signin_screen.dart';
 import 'package:app_movil/screens/mascota/mascota_details_screen.dart';
 import 'package:app_movil/screens/noticia/noticia_details_screen.dart';
+import 'package:app_movil/utils/color_utils.dart';
 import 'package:app_movil/widgets/main_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +19,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -30,11 +33,16 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => MascotaProvider()),
         ChangeNotifierProvider(create: (context) => NoticiaProvider()),
+        ChangeNotifierProvider(create: (context) => UsuarioProvider())
       ],
       child: MaterialApp(
         title: 'BungeeQR',
         home: const AuthenticationWrapper(),
-
+        theme: ThemeData(
+          primaryColor: AppColors.primaryColor,
+          iconTheme: IconThemeData(color: AppColors.primaryColor),
+          fontFamily: 'Roboto',
+        ),
         //initialRoute: MainWidget.routeName,
         routes: {
           MainWidget.routeName: (context) => const MainWidget(),

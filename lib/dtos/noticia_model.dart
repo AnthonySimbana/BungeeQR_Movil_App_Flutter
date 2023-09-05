@@ -16,18 +16,6 @@ class Noticia {
     required this.imageUrl,
   });
 
-  // Constructor de fábrica utilizado para crear una instancia de Noticia a partir de un mapa JSON
-  factory Noticia.fromJson(Map<String, dynamic> json) {
-    return Noticia(
-      id: json['id'],
-      hora: json['hora'],
-      fecha: json['fecha'],
-      ubicacion: json['ubicacion'],
-      descripcion: json['descripcion'],
-      imageUrl: json['sprites']['front_default'],
-    );
-  }
-
   // Constructor de fábrica utilizado para crear una instancia de Noticia a partir de un mapa JSON proveniente de Firebase
   factory Noticia.fromFirebaseJson(Map<String, dynamic> json) {
     return Noticia(
