@@ -29,7 +29,7 @@ class NavBar extends StatelessWidget {
                     ),
                   ),
                   decoration: const BoxDecoration(
-                    color: Colors.blue,
+                    color: Color(0xFF4A43EC),
                     image: DecorationImage(
                         fit: BoxFit.fill,
                         image: NetworkImage(
@@ -84,7 +84,7 @@ class NavBar extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const SignInScreen()),
               );
             },
-            tileColor: Colors.blue.shade200, // Cambiar color de fondo
+            tileColor: const Color(0xFF4A43EC).withOpacity(0.9), // Cambiar color de fondo
           )
         ],
       ),

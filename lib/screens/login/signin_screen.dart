@@ -19,7 +19,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
 
   void _signIn() async {
-    if (_emailTextController.text.isEmpty || _passwordTextController.text.isEmpty) {
+    if (_emailTextController.text.isEmpty ||
+        _passwordTextController.text.isEmpty) {
       showDialog(
         context: context,
         builder: (context) {
@@ -38,18 +39,20 @@ class _SignInScreenState extends State<SignInScreen> {
           );
         },
       );
-    }else{
-      try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailTextController.text,
-          password: _passwordTextController.text);
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainWidget()),
-      );
+    } else {
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _emailTextController.text,
+            password: _passwordTextController.text);
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainWidget()),
+        );
       } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-email') {   
+        if (e.code == 'user-not-found' ||
+            e.code == 'wrong-password' ||
+            e.code == 'invalid-email') {
           print("Credenciales incorrectas");
           showDialog(
             context: context,
@@ -87,38 +90,35 @@ class _SignInScreenState extends State<SignInScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              hexStringToColor("0ab4e4"),
-              hexStringToColor("130d90"),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/fondo.png'),
+            fit: BoxFit.cover,
           ),
         ),
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
               20,
-              MediaQuery.of(context).size.height * 0.2,
+              MediaQuery.of(context).size.height * 0.08,
               20,
               0,
             ),
             child: Column(
               children: <Widget>[
                 //logoWidget('assets/images/logoBungeeQR.png'),
-                const Text(
-                  "My app movil",
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                Image.asset(
+                  'logoBungeeQR.png',
+                  height: 100,
+                ),
+                Image.asset(
+                  'nombreBungeeQR.png',
+                  height: 50,
                 ),
                 const SizedBox(height: 30),
                 reusableTextField(
                   "correo@ejemplo.com",
-                  Icons.person_outline,
+                  Icons.email,
                   false,
                   _emailTextController,
                 ),
@@ -129,9 +129,10 @@ class _SignInScreenState extends State<SignInScreen> {
                   true,
                   _passwordTextController,
                 ),
+
                 const SizedBox(height: 5),
                 forgetPassword(context),
-                firebaseUIButton(context, "Ingresar", _signIn),
+                firebaseUIButton(context, "Iniciar sesión", _signIn),
                 signUpOption(),
               ],
             ),
@@ -146,17 +147,21 @@ class _SignInScreenState extends State<SignInScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text("No tienes una cuenta?",
-            style: TextStyle(color: Colors.white70)),
-        GestureDetector(
-          onTap: () {
+            style: TextStyle(color: Colors.black)),
+        TextButton(
+          onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const SignUpScreen()),
             );
           },
           child: const Text(
-            " Regístrate",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            "Regístrate",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w900,
+              decoration: TextDecoration.underline,
+            ),
           ),
         ),
       ],
@@ -172,7 +177,7 @@ class _SignInScreenState extends State<SignInScreen> {
         child: const Text(
           "¿Olvidaste tu contraseña?",
           style: TextStyle(
-            color: Colors.white70,
+            color: Color(0xFF4A43EC),
             decoration: TextDecoration.underline,
           ),
           textAlign: TextAlign.right,
