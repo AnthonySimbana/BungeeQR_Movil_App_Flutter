@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class UsuarioProvider extends ChangeNotifier {
-  Usuario usuario = Usuario(
-      uid: '', nombre: 'MARTIN', telefono: '', correo: '', imageUrl: '');
+  Usuario usuario =
+      Usuario(uid: '', nombre: '', telefono: '', correo: '', imageUrl: '');
 
   Future<bool> checkUsuario() async {
     await _initUsuario();

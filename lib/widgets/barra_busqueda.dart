@@ -49,7 +49,10 @@ class _BarraBusquedaWidget extends State<BarraBusquedaWidget> {
                       ? const Icon(Icons.cancel)
                       : const Icon(Icons.search),
                 ),
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                      20.0), // Ajusta el radio según tus preferencias
+                ),
               ),
               onChanged: _onTextChanged,
             ),
