@@ -10,7 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'firebase_options.dart';
 
 void main() async {
@@ -72,7 +71,7 @@ class AuthenticationWrapper extends StatelessWidget {
       return const MainWidget();
     } else {
       // Si el usuario no está autenticado, regresa SignInScreen
-      return SignInScreen();
+      return const SignInScreen();
     }
   }
 }

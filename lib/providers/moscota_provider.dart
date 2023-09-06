@@ -1,12 +1,10 @@
 import 'dart:collection';
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:app_movil/dtos/mascota_model.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 
 class MascotaProvider extends ChangeNotifier {
-  final List<Mascota> _originalMascotas = [];
+  List<Mascota> _originalMascotas = [];
   List<Mascota> _mascota = [];
 
   int get totalMascotas => _mascota.length;
@@ -15,6 +13,11 @@ class MascotaProvider extends ChangeNotifier {
 
   Mascota getMascota(int id) {
     return _mascota.firstWhere((element) => element.id == id);
+  }
+
+  void cleanList() {
+    _originalMascotas = [];
+    _mascota = [];
   }
 
   void clearSearch() {
@@ -40,6 +43,23 @@ class MascotaProvider extends ChangeNotifier {
     return false;
   }
 
+  /*
+  Future<int?> getLastOneMascota() async {
+    var db = FirebaseFirestore.instance;
+    var mascotasCollection = db.collection('mascotas');
+    var mascotasSnapshot =
+        await mascotasCollection.orderBy('id', descending: true).limit(1).get();
+    if (mascotasSnapshot.docs.isNotEmpty) {
+      var ultimoDocumento = mascotasSnapshot.docs.first;
+      int? ultimoId = ultimoDocumento['id'];
+      // Incrementa el último ID para obtener el nuevo ID
+      return ultimoId! + 1;
+      // Utiliza nuevoId como el ID para el nuevo documento
+    }
+    return 0;
+  }
+  */
+
 //Metodo que permite agregar comentario a a base de datos en FireStore
   void addCommentToPokemonDoc(int id, String comment) {
     var db = FirebaseFirestore.instance;
@@ -58,12 +78,14 @@ class MascotaProvider extends ChangeNotifier {
       var querySnapshot = await db.collection('mascotas').get();
 
       if (querySnapshot.docs.isNotEmpty) {
+        print('Se obtuvieron datos de mascotas QUERYSnapshot');
         for (var doc in querySnapshot.docs) {
           var mascotaData = doc.data() as Map<String, dynamic>;
           _mascota.add(Mascota.fromFirebaseJson(mascotaData));
           _originalMascotas.add(Mascota.fromFirebaseJson(mascotaData));
         }
         notifyListeners();
+        print('Se agregaron los datos de las mascotas');
       } else {
         print("La colección 'mascotas' está vacía en Firestore.");
       }
@@ -72,28 +94,21 @@ class MascotaProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addPokemonList(String url) async {
-    var client = http.Client();
-    var response = await client.get(Uri.parse(url));
-    var mascotaData = jsonDecode(response.body);
-    print('Procesando: $url');
-
-    final pokemonDocument = <String, dynamic>{
-      //'id': mascotaData['id'],
-      'name': mascotaData['name'],
-      'id': mascotaData['id'],
-      'imageUrl': mascotaData['sprites']['front_default']
-    };
-
+  Future<void> addMascota(Mascota mascota) async {
+    final mascotaDocument = mascota.toJson();
     var db = FirebaseFirestore.instance;
-
-    //Crea la base de datos donde el ID ya no es autogenerado, y si encuentra reemplaza su informacion si no encuentra más,
-    //pasa un marge y actualiza/añade info
     var setOptions = SetOptions(merge: true);
-    db
-        .collection("mascotas")
-        .doc(mascotaData['id'].toString())
-        .set(pokemonDocument, setOptions) //
-        .then((value) => print("Success"));
+    try {
+      await db
+          .collection("mascotas")
+          .doc(mascota.id.toString())
+          .set(mascotaDocument, setOptions)
+          .then((value) => print("Success"));
+      print('Se ingreso con exito la mascota');
+      cleanList();
+      _initMascotaList();
+    } catch (e) {
+      print('Error al guardar en la base de datos: $e');
+    }
   }
 }

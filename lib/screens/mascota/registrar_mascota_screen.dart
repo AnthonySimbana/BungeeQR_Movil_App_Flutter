@@ -1,6 +1,10 @@
+import 'package:app_movil/providers/moscota_provider.dart';
 import 'package:app_movil/widgets/add_imagen.dart';
 import 'package:app_movil/widgets/reusable_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:app_movil/dtos/mascota_model.dart';
+import 'package:provider/provider.dart';
 
 class RegistrarMascotaScreen extends StatefulWidget {
   @override
@@ -16,13 +20,52 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
   var edadController = TextEditingController();
   var descripcionController = TextEditingController();
 
-  onTap() {
+  void crearMascota() async {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      // Aquí puedes hacer algo con los datos ingresados,
-      // como guardarlos en una base de datos.
-      // Luego, puedes navegar a otra pantalla o realizar
-      // la acción que desees.
+      try {
+        final FirebaseAuth _auth = FirebaseAuth.instance;
+        final User? user = _auth.currentUser;
+        String? uid = user?.uid;
+        print('uid del propietario de la mascota: $uid ');
+
+        final MascotaProvider mascotaProvider =
+            Provider.of<MascotaProvider>(context, listen: false);
+        await mascotaProvider.checkMascotas();
+        int id = mascotaProvider.totalMascotas + 1;
+        print('id de la nueva mascota es: $id');
+        //int id = Provider.of<MascotaProvider>(context);
+        final mascota = Mascota(
+          id: id,
+          idUsuario: uid,
+          nombre: nombreController.text,
+          especie: especieController.text,
+          genero: generoController.text,
+          edad: edadController.text,
+          descripcion: descripcionController.text,
+          imageUrl: 'http://placekitten.com/200/200',
+          //imageUrl: imagenUrlController.text,
+        );
+
+        Provider.of<MascotaProvider>(context, listen: false)
+            .addMascota(mascota);
+        // Restablecer los controladores de texto después de guardar
+        nombreController.clear();
+        especieController.clear();
+        generoController.clear();
+        edadController.clear();
+        descripcionController.clear();
+        imagenUrlController.clear();
+
+        print('MASCOTA AGREGADA CON EXITO');
+
+        // Mostrar un mensaje de éxito o navegar a otra pantalla si es necesario
+        // Puedes utilizar ScaffoldMessenger para mostrar SnackBars o navegar con Navigator.
+      } catch (e) {
+        print('Error CREARMASCOTA() al guardar la mascota: $e');
+        // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario.
+      }
+    } else {
+      print('No se llenaron todos los campos');
     }
   }
 
@@ -80,7 +123,27 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
                   return null; // Retorna null si la validación es exitosa
                 }, TextInputType.name),
                 SizedBox(height: 20),
-                firebaseUIButton(context, 'Guardar', onTap),
+                firebaseUIButton(context, 'Guardar', crearMascota),
+                /*
+                Expanded(
+                    child: FutureBuilder(
+                  future: Provider.of<UsuarioProvider>(context, listen: false)
+                      .checkUsuario(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      var usuarioProvider =
+                          Provider.of<UsuarioProvider>(context, listen: false);
+
+                      //String id = (mascotaProvider.totalMascotas + 2) as String;
+                      usuarioProvider.checkUsuario();
+                      String idUsuario = usuarioProvider.usuario.uid as String;
+                      return firebaseUIButton(context, 'Guardar', crearMascota);
+                    }
+                    ;
+                  },
+                
+                )
+                ),*/
               ],
             ),
           ),

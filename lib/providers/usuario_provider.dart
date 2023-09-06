@@ -1,12 +1,8 @@
-import 'dart:collection';
-import 'dart:convert';
-import 'package:app_movil/dtos/noticia_model.dart';
 import 'package:app_movil/dtos/usuario_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class UsuarioProvider extends ChangeNotifier {
   Usuario usuario = Usuario(
@@ -38,38 +34,8 @@ class UsuarioProvider extends ChangeNotifier {
             .get(); //Dato del usuario de firebase
 
         if (userDoc.exists) {
-          // El documento existe, obtén los datos del usuario
-          //print('EL documento existe');
           var userData = userDoc.data() as Map<String, dynamic>;
-          //userData.forEach((key, value) {
-          //  print('$key: $value');
-          //});
-
-          String uidAux = (userData['uid']);
-          String nombreAux = (userData['nombre']);
-          String telefonoAux = (userData['telefono']);
-          String correoAux = (userData['correo']);
-          String imagenUrlAux = userData['imagenUrl'];
-
           usuario = Usuario.fromFirebaseJson(userData);
-          /*
-          usuario.setUidUsuario(uidAux);
-          usuario.setNombreUsuario(nombreAux);
-          usuario.setTelefonoUsuario(telefonoAux);
-          usuario.setCorreoUsuario(correoAux);
-          usuario.setImagenUrlUsuario(imagenUrlAux);
-          */
-          /*
-          print('Aqu se imprime lo restante');
-          print('NUEVAS ACTUALIZACIONES');
-          print(usuario.getCorreoUsuario().toString());
-          print(usuario.getImagenUrlUsuario().toString());
-          print(usuario.getCorreoUsuario().toString());
-          print(usuario.getCorreoUsuario().toString());
-          print(usuario.getCorreoUsuario().toString());
-          print('Hola hdm');
-          // usuario = Usuario.fromFirebaseJson(userData);
-          */
         } else {
           // El documento no existe
           print('Error, el usuario no existe');

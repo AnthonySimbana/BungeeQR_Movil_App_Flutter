@@ -1,5 +1,6 @@
 class Mascota {
   int id;
+  String? idUsuario;
   String nombre;
   String especie;
   String genero;
@@ -10,6 +11,7 @@ class Mascota {
   // Constructor
   Mascota({
     required this.id,
+    required this.idUsuario,
     required this.nombre,
     required this.especie,
     required this.genero,
@@ -22,6 +24,7 @@ class Mascota {
   factory Mascota.fromFirebaseJson(Map<String, dynamic> json) {
     return Mascota(
       id: json['id'],
+      idUsuario: json['idUsuario'],
       nombre: json['nombre'],
       especie: json['especie'],
       genero: json['genero'],
@@ -31,9 +34,14 @@ class Mascota {
     );
   }
 
+  int getId() {
+    return id;
+  }
+
   // Método utilizado para convertir una instancia de Mascota a un mapa JSON
   Map<String, Object?> toJson() => {
         'id': id,
+        'idUsuario': idUsuario,
         'nombre': nombre,
         'especie': especie,
         'genero': genero,

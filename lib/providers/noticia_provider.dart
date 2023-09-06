@@ -1,9 +1,7 @@
 import 'dart:collection';
-import 'dart:convert';
 import 'package:app_movil/dtos/noticia_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 
 class NoticiaProvider extends ChangeNotifier {
   final List<Noticia> _originalNoticias = [];

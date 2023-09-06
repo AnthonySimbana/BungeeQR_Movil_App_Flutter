@@ -4,7 +4,6 @@ import 'package:app_movil/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class MascotaDetailsScreen extends StatelessWidget {
   static const routeName = '/mascota-details';
   //final String pokemonId;
