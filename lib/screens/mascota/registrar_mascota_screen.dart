@@ -66,8 +66,10 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
         //Obtiene el id de la nueva mascota
         final MascotaProvider mascotaProvider =
             Provider.of<MascotaProvider>(context, listen: false);
-        await mascotaProvider.checkMascotas();
+
+        await mascotaProvider.checkMascotas(uid!);
         int id = mascotaProvider.totalMascotas + 1;
+        print('Id de la mascota a registrar: $id');
         //Crear objeto mascota
         final mascota = Mascota(
           id: id,

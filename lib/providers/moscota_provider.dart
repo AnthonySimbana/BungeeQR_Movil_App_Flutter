@@ -1,14 +1,15 @@
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:app_movil/dtos/mascota_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class MascotaProvider extends ChangeNotifier {
   List<Mascota> _originalMascotasUser = [];
   List<Mascota> _mascotaUser = [];
-  List<Mascota> _mascotas = [];
+  int _totalMascotas = 0;
 
-  int get totalMascotas => _mascotaUser.length;
+  int get totalMascotas => _totalMascotas;
 
   UnmodifiableListView<Mascota> get mascotas =>
       UnmodifiableListView(_mascotaUser);
@@ -37,26 +38,46 @@ class MascotaProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> checkMascotas() async {
+  Future<bool> checkMascotas(String idUsuario) async {
     if (_mascotaUser.isEmpty) {
-      await _initMascotaList();
+      await _initMascotaList(idUsuario);
       return true;
     }
     return false;
   }
 
   //Trae todas las mascotas de la base de datos
-  Future<void> _initMascotaList() async {
+  Future<void> _initMascotaList(String idUsuario) async {
+    cleanList();
     try {
       var db = FirebaseFirestore.instance;
-      var querySnapshot = await db.collection('mascotas').get();
+      var querySnapshotUser = await db
+          .collection('mascotas')
+          .where('idUsuario', isEqualTo: idUsuario)
+          .get();
 
-      if (querySnapshot.docs.isNotEmpty) {
-        print('Se obtuvieron datos de mascotas QUERYSnapshot');
-        for (var doc in querySnapshot.docs) {
+      if (querySnapshotUser.docs.isNotEmpty) {
+        for (var doc in querySnapshotUser.docs) {
           var mascotaData = doc.data() as Map<String, dynamic>;
           _mascotaUser.add(Mascota.fromFirebaseJson(mascotaData));
           _originalMascotasUser.add(Mascota.fromFirebaseJson(mascotaData));
+        }
+        notifyListeners();
+        print('Se agregaron los datos de las mascotas');
+      } else {
+        print("La colección 'mascotas' está vacía en Firestore.");
+      }
+
+      var querySnapshotTotal = await db.collection('mascotas').get();
+
+      if (querySnapshotTotal.docs.isNotEmpty) {
+        _totalMascotas = 0;
+        print(_totalMascotas);
+        for (var doc in querySnapshotTotal.docs) {
+          _totalMascotas++;
+          print(_totalMascotas);
+          //var mascotaData = doc.data() as Map<String, dynamic>;
+          //_mascotas.add(Mascota.fromFirebaseJson(mascotaData));
         }
         notifyListeners();
         print('Se agregaron los datos de las mascotas');
@@ -78,9 +99,11 @@ class MascotaProvider extends ChangeNotifier {
           .doc(mascota.id.toString())
           .set(mascotaDocument, setOptions)
           .then((value) => print("Success"));
-      print('Se ingreso con exito la mascota');
+      //print('Se ingreso con exito la mascota');
       cleanList();
-      _initMascotaList();
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      final User? user = _auth.currentUser;
+      _initMascotaList(user!.uid.toString());
     } catch (e) {
       print('Error al guardar en la base de datos: $e');
     }

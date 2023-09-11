@@ -1,6 +1,7 @@
 import 'package:app_movil/providers/moscota_provider.dart';
 import 'package:app_movil/widgets/barra_busqueda.dart';
 import 'package:app_movil/widgets/mascotas_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,8 @@ class _MascotaScreenWidgetState extends State<MascotaScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final User? user = _auth.currentUser;
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -50,7 +53,7 @@ class _MascotaScreenWidgetState extends State<MascotaScreen> {
           Expanded(
             child: FutureBuilder(
               future: Provider.of<MascotaProvider>(context, listen: false)
-                  .checkMascotas(),
+                  .checkMascotas(user!.uid.toString()),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   //Cuando la llamada al metodo async se ejecuta

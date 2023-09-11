@@ -1,12 +1,11 @@
 import 'package:app_movil/dtos/noticia_model.dart';
 import 'package:app_movil/providers/noticia_provider.dart';
+import 'package:app_movil/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class NoticiaDetailsScreen extends StatelessWidget {
   static const routeName = '/noticia-details';
-  //final String pokemonId;
 
   const NoticiaDetailsScreen({super.key});
 
@@ -15,7 +14,6 @@ class NoticiaDetailsScreen extends StatelessWidget {
       child: Text(
         noticia.descripcion,
         style: const TextStyle(
-          fontWeight: FontWeight.w600,
           color: Colors.blue,
           fontSize: 20,
         ),
@@ -33,11 +31,14 @@ class NoticiaDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Noticia'),
+        backgroundColor: AppColors.primaryColor,
+        title: Text('Noticia'),
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 20),
             Hero(
               tag: noticiaData.id,
               child: SizedBox(
@@ -48,19 +49,34 @@ class NoticiaDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 30,
-                right: 20,
-              ),
-              child: Row(
-                children: [
-                  _getNoticiaNameWidget(noticiaData),
-                  //PokemonFavorite(id: noticiaData.id)
-                ],
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.calendar_today),
+                SizedBox(width: 10),
+                Text(noticiaData.fecha),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.access_time),
+                SizedBox(width: 10),
+                Text(noticiaData.hora),
+              ],
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Descripción:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            //InputComment(id: noticiaData.id),
+            SizedBox(height: 10),
+            Text(noticiaData.descripcion),
           ],
         ),
       ),
