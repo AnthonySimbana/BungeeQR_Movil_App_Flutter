@@ -47,6 +47,10 @@ class UsuarioProvider extends ChangeNotifier {
     }
   }
 
+  Usuario getUsuarioData() {
+    return usuario;
+  }
+
   String getNombreUsuario() {
     return usuario.nombre;
   }

@@ -62,6 +62,7 @@ class _MainWidgetState extends State<MainWidget> {
     return Scaffold(
       drawer: const NavBar(),
       appBar: AppBar(
+        //toolbarHeight: 70,
         backgroundColor: AppColors.primaryColor,
         title: Text(_titles[_selectedIndex]),
         shape: const ContinuousRectangleBorder(
