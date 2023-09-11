@@ -3,6 +3,7 @@ import 'package:app_movil/screens/login/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:app_movil/utils/color_utils.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -12,10 +13,9 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  String _userName = 'Ronny Santos';
-  String _userEmail = 'example@gmail.com';
-  String _userImageUrl =
-      'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png';
+  String _userName = '';
+  String _userEmail = '';
+  String _userImageUrl = '';
 
   _inicializarInformacion() {
     final userProvider = Provider.of<UsuarioProvider>(context);
@@ -34,10 +34,10 @@ class _NavBarState extends State<NavBar> {
                 .checkUsuario(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
               if (snapshot.hasError || !snapshot.hasData) {
-                return Text('Error o usuario no autenticado');
+                return const Text('Error o usuario no autenticado');
               }
               final user = snapshot.data!;
               _inicializarInformacion();
@@ -55,9 +55,9 @@ class _NavBarState extends State<NavBar> {
                     ),
                   ),
                 ),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF4A43EC),
-                  image: DecorationImage(
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  image: const DecorationImage(
                     fit: BoxFit.fill,
                     image: AssetImage('assets/images/fondoNavBar.jpg'),
                   ),
@@ -97,14 +97,14 @@ class _NavBarState extends State<NavBar> {
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(
+            leading: Icon(
               Icons.exit_to_app_sharp,
-              color: Colors.purple,
+              color: AppColors.primaryColor,
             ),
-            title: const Text(
+            title: Text(
               'Exit',
               style: TextStyle(
-                color: Colors.purple,
+                color: AppColors.primaryColor,
               ),
             ),
             onTap: () async {

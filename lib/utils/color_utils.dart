@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 class AppColors {
   static Color primaryColor = hexStringToColor('#4A43EC');
   static Color secondaryColor = Color(0xFFE57373);
+
+  Color getPrimaryColor() {
+    return primaryColor;
+  }
 }
 
 hexStringToColor(String hexColor) {
@@ -12,4 +16,3 @@ hexStringToColor(String hexColor) {
   }
   return Color(int.parse(hexColor, radix: 16));
 }
-

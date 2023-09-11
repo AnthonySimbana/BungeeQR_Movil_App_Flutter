@@ -1,39 +1,74 @@
+import 'dart:io';
+
 import 'package:app_movil/providers/moscota_provider.dart';
+import 'package:app_movil/service/upload_image.dart';
 import 'package:app_movil/widgets/add_imagen.dart';
 import 'package:app_movil/widgets/reusable_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:app_movil/dtos/mascota_model.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class RegistrarMascotaScreen extends StatefulWidget {
+  const RegistrarMascotaScreen({super.key});
+
   @override
   _RegistrarMascotaScreenState createState() => _RegistrarMascotaScreenState();
 }
 
 class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
-  final _formKey = GlobalKey<FormState>();
-  var imagenUrlController = TextEditingController();
+  File? imageDataUpload; //File de la foto o imagen
+  final _formKey = GlobalKey<FormState>(); //Key del formulario
+  //Variables para registrar una mascota
   var nombreController = TextEditingController();
   var especieController = TextEditingController();
   var generoController = TextEditingController();
   var edadController = TextEditingController();
   var descripcionController = TextEditingController();
+  String? imagenUrl =
+      'https://firebasestorage.googleapis.com/v0/b/bungeeqr.appspot.com/o/Iconos%2FaddMascota.jpg?alt=media&token=901cd5a4-fff6-4767-b67e-8b112961ef23';
+  //Agregar imagen mascota la mascota y actualizar su url
+  Future<void> _registrarMascota() async {
+    print('_registrarMascota en ejecucion');
+    String? imagenUrlAux = await uploadImageMascota(imageDataUpload!);
+    setState(() {
+      imagenUrl = imagenUrlAux;
+    });
+  }
 
-  void crearMascota() async {
-    if (_formKey.currentState!.validate()) {
+  //Valida el formulario lleno e imagen existentes
+  _validateData() {
+    return _formKey.currentState!.validate() && imageDataUpload != null;
+  }
+
+  _validateCrearMascota() async {
+    final uploaded = await crearMascota();
+    if (uploaded) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Mascota agregada correctamente")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Error al agregar la mascota")));
+    }
+  }
+
+  //Agrega la mascota en firebase
+  Future<bool> crearMascota() async {
+    if (_validateData()) {
+      //De ser los campos validos, entonces:
       try {
+        await _registrarMascota(); //Primero la carga al Storage Fireba
         final FirebaseAuth _auth = FirebaseAuth.instance;
         final User? user = _auth.currentUser;
-        String? uid = user?.uid;
-        print('uid del propietario de la mascota: $uid ');
+        String? uid = user?.uid; //Obtiene uid del duenio de la mascota
 
+        //Obtiene el id de la nueva mascota
         final MascotaProvider mascotaProvider =
             Provider.of<MascotaProvider>(context, listen: false);
         await mascotaProvider.checkMascotas();
         int id = mascotaProvider.totalMascotas + 1;
-        print('id de la nueva mascota es: $id');
-        //int id = Provider.of<MascotaProvider>(context);
+        //Crear objeto mascota
         final mascota = Mascota(
           id: id,
           idUsuario: uid,
@@ -42,31 +77,35 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
           genero: generoController.text,
           edad: edadController.text,
           descripcion: descripcionController.text,
-          imageUrl: 'http://placekitten.com/200/200',
-          //imageUrl: imagenUrlController.text,
+          imageUrl: imagenUrl,
         );
 
+        //Agrega la mascota en firebase
         Provider.of<MascotaProvider>(context, listen: false)
             .addMascota(mascota);
+
         // Restablecer los controladores de texto después de guardar
-        nombreController.clear();
-        especieController.clear();
-        generoController.clear();
-        edadController.clear();
-        descripcionController.clear();
-        imagenUrlController.clear();
+        _reiniciarControladores();
 
-        print('MASCOTA AGREGADA CON EXITO');
-
-        // Mostrar un mensaje de éxito o navegar a otra pantalla si es necesario
-        // Puedes utilizar ScaffoldMessenger para mostrar SnackBars o navegar con Navigator.
+        return true;
       } catch (e) {
-        print('Error CREARMASCOTA() al guardar la mascota: $e');
-        // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario.
+        print('Error al crear registrar formulario de mascota: $e');
+        return false;
       }
-    } else {
-      print('No se llenaron todos los campos');
     }
+    return false;
+  }
+
+  _reiniciarControladores() {
+    nombreController.clear();
+    especieController.clear();
+    generoController.clear();
+    edadController.clear();
+    descripcionController.clear();
+    setState(() {
+      imagenUrl =
+          'https://firebasestorage.googleapis.com/v0/b/bungeeqr.appspot.com/o/Iconos%2FaddMascota.jpg?alt=media&token=901cd5a4-fff6-4767-b67e-8b112961ef23';
+    });
   }
 
   @override
@@ -79,7 +118,16 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                AddImagenWidget(imageUrl: '', icon: Icons.add),
+                AddImagenWidget(
+                    imageUrl: imagenUrl!,
+                    icon: Icons.add,
+                    onImageSelected: (XFile? imagePath) {
+                      if (imagePath!.path != null) {
+                        setState(() {
+                          imageDataUpload = File(imagePath.path);
+                        });
+                      }
+                    }),
                 const SizedBox(height: 15),
                 reusableTextFormField('Nombre de la mascota *', Icons.edit,
                     nombreController, true, (value) {
@@ -122,28 +170,8 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
                     (value) {
                   return null; // Retorna null si la validación es exitosa
                 }, TextInputType.name),
-                SizedBox(height: 20),
-                firebaseUIButton(context, 'Guardar', crearMascota),
-                /*
-                Expanded(
-                    child: FutureBuilder(
-                  future: Provider.of<UsuarioProvider>(context, listen: false)
-                      .checkUsuario(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      var usuarioProvider =
-                          Provider.of<UsuarioProvider>(context, listen: false);
-
-                      //String id = (mascotaProvider.totalMascotas + 2) as String;
-                      usuarioProvider.checkUsuario();
-                      String idUsuario = usuarioProvider.usuario.uid as String;
-                      return firebaseUIButton(context, 'Guardar', crearMascota);
-                    }
-                    ;
-                  },
-                
-                )
-                ),*/
+                const SizedBox(height: 20),
+                firebaseUIButton(context, 'Guardar', _validateCrearMascota),
               ],
             ),
           ),

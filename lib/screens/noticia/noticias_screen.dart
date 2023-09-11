@@ -1,4 +1,6 @@
 import 'package:app_movil/providers/noticia_provider.dart';
+import 'package:app_movil/screens/noticia/agregar_noticia_screen.dart';
+import 'package:app_movil/utils/color_utils.dart';
 import 'package:app_movil/widgets/barra_busqueda.dart';
 import 'package:app_movil/widgets/noticias_list.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +65,15 @@ class _NoticiaScreenState extends State<NoticiaScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const RegistrarNoticiaScreen()),
+        ),
+        child: Icon(Icons.add, color: Colors.white),
+        backgroundColor: AppColors.primaryColor,
       ),
     );
   }

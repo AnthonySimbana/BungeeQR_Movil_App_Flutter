@@ -6,7 +6,7 @@ class Mascota {
   String genero;
   String edad;
   String descripcion;
-  String imageUrl;
+  String? imageUrl;
 
   // Constructor
   Mascota({

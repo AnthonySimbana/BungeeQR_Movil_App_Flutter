@@ -2,7 +2,6 @@ import 'package:app_movil/providers/usuario_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app_movil/widgets/reusable_widget.dart';
 import 'package:app_movil/widgets/main_widget.dart';
-import 'package:app_movil/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,18 +56,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 89, 73, 210)),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              hexStringToColor("0ab4e4"),
-              hexStringToColor("130d90"),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/fondo.png'),
+            fit: BoxFit.cover,
           ),
         ),
         child: SingleChildScrollView(
@@ -79,10 +75,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const Text(
                   "Regístrate",
                   style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 89, 73, 210)),
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(

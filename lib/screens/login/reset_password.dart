@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app_movil/widgets/reusable_widget.dart';
-import 'package:app_movil/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -21,23 +20,20 @@ class _ResetPasswordState extends State<ResetPassword> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 89, 73, 210)),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              hexStringToColor("0ab4e4"),
-              hexStringToColor("130d90"),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/fondo.png'),
+            fit: BoxFit.cover,
           ),
         ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 120, 20, 0),
             child: Column(
               children: <Widget>[
                 const Text(
@@ -45,16 +41,17 @@ class _ResetPasswordState extends State<ResetPassword> {
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 89, 73, 210),
                   ),
                   textAlign: TextAlign.center,
                 ),
+                const SizedBox(height: 20),
                 const Text(
                   "Ingrese el correo electrónico que tiene asociado a su cuenta",
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.normal,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -68,7 +65,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 const SizedBox(height: 20),
                 Text(
                   _errorMessage,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
                 firebaseUIButton(context, "Cambiar contraseña", () {
                   if (_emailTextController.text.isEmpty) {

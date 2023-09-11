@@ -1,5 +1,4 @@
 import 'package:app_movil/providers/usuario_provider.dart';
-import 'package:app_movil/screens/mascota/mascota_details_screen.dart';
 import 'package:app_movil/screens/mascota/mascota_screen.dart';
 import 'package:app_movil/screens/noticia/noticias_screen.dart';
 import 'package:app_movil/screens/perfil/perfil_screen.dart';
@@ -37,9 +36,9 @@ class _MainWidgetState extends State<MainWidget> {
   final List<Widget> _mainWidgets = [
     const NoticiaScreen(),
     const MascotaScreen(),
-    RegistrarMascotaScreen(),
-    ScannerScreen(),
-    UserProfileScreen()
+    const RegistrarMascotaScreen(),
+    const ScannerScreen(),
+    const UserProfileScreen()
     //UserProfileScreen(usuarioProvider: _usuarioProvider),
   ];
 
@@ -63,7 +62,7 @@ class _MainWidgetState extends State<MainWidget> {
     return Scaffold(
       drawer: const NavBar(),
       appBar: AppBar(
-        backgroundColor: hexStringToColor('#4A43EC'),
+        backgroundColor: AppColors.primaryColor,
         title: Text(_titles[_selectedIndex]),
         shape: const ContinuousRectangleBorder(
           borderRadius: BorderRadius.only(

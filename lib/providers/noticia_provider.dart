@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class NoticiaProvider extends ChangeNotifier {
-  final List<Noticia> _originalNoticias = [];
+  List<Noticia> _originalNoticias = [];
   List<Noticia> _noticia = [];
 
   int get totalNoticias => _noticia.length;
@@ -13,6 +13,11 @@ class NoticiaProvider extends ChangeNotifier {
 
   Noticia getNoticia(int id) {
     return _noticia.firstWhere((element) => element.id == id);
+  }
+
+  void cleanList() {
+    _originalNoticias = [];
+    _noticia = [];
   }
 
   void clearSearch() {
@@ -37,17 +42,6 @@ class NoticiaProvider extends ChangeNotifier {
     return false;
   }
 
-//Metodo que permite agregar comentario a a base de datos en FireStore
-  void addCommentToPokemonDoc(int id, String comment) {
-    var db = FirebaseFirestore.instance;
-    final commentObj = <String, dynamic>{'comment': comment};
-    var setOptions = SetOptions(merge: true);
-    db.collection('noticias').doc(id.toString()).set(
-          commentObj,
-          setOptions,
-        );
-  }
-
   //Trae todas las noticias de la base de datos
   Future<void> _initNoticiasList() async {
     try {
@@ -69,5 +63,21 @@ class NoticiaProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addNoticiaList(String url) async {}
+  Future<void> addNoticia(Noticia noticia) async {
+    final noticiaDocument = noticia.toJson();
+    var db = FirebaseFirestore.instance;
+    var setOptions = SetOptions(merge: true);
+    try {
+      await db
+          .collection("noticias")
+          .doc(noticia.id.toString())
+          .set(noticiaDocument, setOptions)
+          .then((value) => print("Success"));
+      print('Se ingreso con exito la noticia');
+      cleanList();
+      _initNoticiasList();
+    } catch (e) {
+      print('Error al guardar en la base de datos: $e');
+    }
+  }
 }

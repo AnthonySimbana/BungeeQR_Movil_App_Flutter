@@ -46,7 +46,7 @@ class _MascotaScreenWidgetState extends State<MascotaScreen> {
                 controller: textSearchController,
                 onSearch: _searchMascotas,
                 onClear: _clearSearch,
-            )),
+              )),
           Expanded(
             child: FutureBuilder(
               future: Provider.of<MascotaProvider>(context, listen: false)

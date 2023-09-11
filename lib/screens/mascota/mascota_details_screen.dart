@@ -33,6 +33,7 @@ class MascotaDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
         title: const Text('Mascota'),
       ),
       body: SingleChildScrollView(
@@ -44,7 +45,7 @@ class MascotaDetailsScreen extends StatelessWidget {
                 height: 300,
                 child: Image(
                   fit: BoxFit.cover,
-                  image: NetworkImage(mascotaData.imageUrl),
+                  image: NetworkImage(mascotaData.imageUrl!),
                 ),
               ),
             ),

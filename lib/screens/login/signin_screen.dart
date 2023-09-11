@@ -3,7 +3,6 @@ import 'package:app_movil/screens/login/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app_movil/widgets/reusable_widget.dart';
 import 'package:app_movil/widgets/main_widget.dart';
-import 'package:app_movil/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -53,7 +52,6 @@ class _SignInScreenState extends State<SignInScreen> {
         if (e.code == 'user-not-found' ||
             e.code == 'wrong-password' ||
             e.code == 'invalid-email') {
-          print("Credenciales incorrectas");
           showDialog(
             context: context,
             builder: (context) {
@@ -130,9 +128,11 @@ class _SignInScreenState extends State<SignInScreen> {
                   _passwordTextController,
                 ),
 
-                const SizedBox(height: 5),
+                const SizedBox(height: 10),
                 forgetPassword(context),
+                const SizedBox(height: 10),
                 firebaseUIButton(context, "Iniciar sesión", _signIn),
+                const SizedBox(height: 10),
                 signUpOption(),
               ],
             ),
@@ -147,7 +147,10 @@ class _SignInScreenState extends State<SignInScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text("No tienes una cuenta?",
-            style: TextStyle(color: Colors.black)),
+            style: TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+            )),
         TextButton(
           onPressed: () {
             Navigator.push(
@@ -161,6 +164,7 @@ class _SignInScreenState extends State<SignInScreen> {
               color: Colors.black,
               fontWeight: FontWeight.w900,
               decoration: TextDecoration.underline,
+              fontStyle: FontStyle.italic,
             ),
           ),
         ),
@@ -184,7 +188,7 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         onPressed: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ResetPassword()),
+          MaterialPageRoute(builder: (context) => const ResetPassword()),
         ),
       ),
     );

@@ -29,30 +29,18 @@ class _MascotaListItemsState extends State<MascotaListItems> {
             child: Card(
               elevation: 10,
               child: ListTile(
-                contentPadding: EdgeInsets.all(10),
-                // leading: Container(
-                //   width: 100,
-                //   height: 200,
-                //   child:
-                //     Image.network(
-                //       'http://placekitten.com/200/300',
-                //       fit: BoxFit.cover,
-                //       repeat: ImageRepeat.noRepeat,
-                //     ),
-                //   ),
+                contentPadding: const EdgeInsets.all(10),
                 leading: AspectRatio(
                   aspectRatio: 1.75,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(2.0),
-                    child: Image.network('http://placekitten.com/200/300',
+                    child: Image.network(widget.mascotas[index].imageUrl!,
                         fit: BoxFit.cover, repeat: ImageRepeat.noRepeat),
                   ),
                 ),
-
                 title: Text(widget.mascotas[index].nombre,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16)),
-
                 subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -75,18 +63,15 @@ class _MascotaListItemsState extends State<MascotaListItems> {
                       children: [
                         Container(
                           alignment: Alignment.center,
-
                           width: 85.0, // Ancho fijo del código QR
                           child: QrWidget(
-                            data: data,
-                            //data: widget.mascotas[index].qrData,
+                            data: widget.mascotas[index].imageUrl!,
                           ),
                         ),
                       ],
                     ),
                   ],
                 ),
-
                 trailing: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
