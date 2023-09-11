@@ -19,6 +19,7 @@ class _MascotaScreenWidgetState extends State<MascotaScreen> {
   @override
   void initState() {
     textSearchController.addListener((_searchMascotas));
+    FirebaseAuth.instance.authStateChanges().listen(_onUserChange);
     super.initState();
   }
 
@@ -33,6 +34,16 @@ class _MascotaScreenWidgetState extends State<MascotaScreen> {
           .searchMascotasByName(textSearchController.text);
     } else {
       _clearSearch();
+    }
+  }
+
+  void _onUserChange(User? user) {
+    if (user != null) {
+      // El usuario inició sesión, realiza las acciones necesarias
+      // Aquí puedes cargar las mascotas del nuevo usuario si es necesario.
+    } else {
+      // El usuario cerró la sesión, reinicia los datos de las mascotas.
+      Provider.of<MascotaProvider>(context, listen: false).cleanList();
     }
   }
 

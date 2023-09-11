@@ -163,7 +163,7 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
                     return 'Por favor, ingresa la edad';
                   }
                   return null; // Retorna null si la validación es exitosa
-                }, TextInputType.number),
+                }, TextInputType.name),
                 const SizedBox(height: 15),
                 reusableTextFormField(
                     'Descripcion', Icons.edit, descripcionController, true,

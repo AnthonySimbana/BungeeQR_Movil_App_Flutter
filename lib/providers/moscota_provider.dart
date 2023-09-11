@@ -19,8 +19,8 @@ class MascotaProvider extends ChangeNotifier {
   }
 
   void cleanList() {
-    _originalMascotasUser = [];
-    _mascotaUser = [];
+    _originalMascotasUser.clear();
+    _mascotaUser.clear();
   }
 
   void clearSearch() {
@@ -79,11 +79,11 @@ class MascotaProvider extends ChangeNotifier {
           //var mascotaData = doc.data() as Map<String, dynamic>;
           //_mascotas.add(Mascota.fromFirebaseJson(mascotaData));
         }
-        notifyListeners();
         print('Se agregaron los datos de las mascotas');
       } else {
         print("La colección 'mascotas' está vacía en Firestore.");
       }
+      notifyListeners();
     } catch (e) {
       print("Error al obtener datos desde Firestore: $e");
     }

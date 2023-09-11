@@ -119,7 +119,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       'Correo',
                       Icons.mail_outline,
                       correoController,
-                      isEditing,
+                      false,
                       (value) {
                         if (value == null || value.isEmpty) {
                           return 'Por favor, ingresa un correo válido.';
