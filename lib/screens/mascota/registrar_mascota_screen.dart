@@ -22,12 +22,15 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
   final _formKey = GlobalKey<FormState>(); //Key del formulario
   //Variables para registrar una mascota
   var nombreController = TextEditingController();
-  var especieController = TextEditingController();
-  var generoController = TextEditingController();
+  
+  List<String> especieOptions = ['Perro', 'Gato'];
+  String selectedEspecie = 'Perro'; // Valor inicial seleccionado
+  List<String> generoOptions = ['Macho', 'Hembra'];
+  String selectedGenero = 'Macho'; // Valor inicial seleccionado
   var edadController = TextEditingController();
   var descripcionController = TextEditingController();
   String? imagenUrl =
-      'https://firebasestorage.googleapis.com/v0/b/bungeeqr.appspot.com/o/Iconos%2FaddMascota.jpg?alt=media&token=901cd5a4-fff6-4767-b67e-8b112961ef23';
+      'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.culturarecreacionydeporte.gov.co%2Fes%2Fbogotanitos%2Fbiodiverciudad%2Flas-mascotas&psig=AOvVaw0eBgKoy1-1bAn0OQLst4l9&ust=1694559119555000&source=images&cd=vfe&opi=89978449&ved=0CA4QjRxqFwoTCPDGgvzSo4EDFQAAAAAdAAAAABAJ';
   //Agregar imagen mascota la mascota y actualizar su url
   Future<void> _registrarMascota() async {
     String? imagenUrlAux = await uploadImageMascota(imageDataUpload!);
@@ -73,8 +76,8 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
           id: id,
           idUsuario: uid,
           nombre: nombreController.text,
-          especie: especieController.text,
-          genero: generoController.text,
+          especie: selectedEspecie,
+          genero: selectedGenero,
           edad: edadController.text,
           descripcion: descripcionController.text,
           imageUrl: imagenUrl,
@@ -98,13 +101,13 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
 
   _reiniciarControladores() {
     nombreController.clear();
-    especieController.clear();
-    generoController.clear();
+    selectedEspecie = 'Perro';
+    selectedGenero =  'Macho';
     edadController.clear();
     descripcionController.clear();
     setState(() {
       imagenUrl =
-          'https://firebasestorage.googleapis.com/v0/b/bungeeqr.appspot.com/o/Iconos%2FaddMascota.jpg?alt=media&token=901cd5a4-fff6-4767-b67e-8b112961ef23';
+          'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.culturarecreacionydeporte.gov.co%2Fes%2Fbogotanitos%2Fbiodiverciudad%2Flas-mascotas&psig=AOvVaw0eBgKoy1-1bAn0OQLst4l9&ust=1694559119555000&source=images&cd=vfe&opi=89978449&ved=0CA4QjRxqFwoTCPDGgvzSo4EDFQAAAAAdAAAAABAJ';
     });
   }
 
@@ -138,23 +141,59 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
                   return null; // Retorna null si la validación es exitosa
                 }, TextInputType.name),
                 const SizedBox(height: 15),
-                reusableTextFormField(
-                    'Especie *', Icons.edit, especieController, true, (value) {
-                  // Puedes personalizar la lógica de validación según tus requisitos.
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, ingresa una especie';
-                  }
-                  return null; // Retorna null si la validación es exitosa
-                }, TextInputType.name),
+                
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: 'Especie *',
+                    prefixIcon: Icon(Icons.edit),
+                  ),
+                  value: selectedEspecie,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedEspecie = newValue!;
+                    });
+                  },
+                  items: especieOptions
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, selecciona la especie';
+                    }
+                    return null; // Retorna null si la validación es exitosa
+                  },
+                ),
+
                 const SizedBox(height: 15),
-                reusableTextFormField(
-                    'Genero *', Icons.edit, generoController, true, (value) {
-                  // Puedes personalizar la lógica de validación según tus requisitos.
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, ingresa el género';
-                  }
-                  return null; // Retorna null si la validación es exitosa
-                }, TextInputType.name),
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: 'Género *',
+                    prefixIcon: Icon(Icons.edit),
+                  ),
+                  value: selectedGenero,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedGenero = newValue!;
+                    });
+                  },
+                  items: generoOptions
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, selecciona el género';
+                    }
+                    return null; // Retorna null si la validación es exitosa
+                  },
+                ),
                 const SizedBox(height: 15),
                 reusableTextFormField(
                     'Edad *', Icons.edit, edadController, true, (value) {
