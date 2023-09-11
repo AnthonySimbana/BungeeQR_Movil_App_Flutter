@@ -9,18 +9,6 @@ class NoticiaDetailsScreen extends StatelessWidget {
 
   const NoticiaDetailsScreen({super.key});
 
-  Widget _getNoticiaNameWidget(Noticia noticia) {
-    return Expanded(
-      child: Text(
-        noticia.descripcion,
-        style: const TextStyle(
-          color: Colors.blue,
-          fontSize: 20,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     int id = ModalRoute.of(context)!.settings.arguments as int;
@@ -32,13 +20,13 @@ class NoticiaDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
-        title: Text('Noticia'),
+        title: const Text('Noticia'),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Hero(
               tag: noticiaData.id,
               child: SizedBox(
@@ -49,33 +37,33 @@ class NoticiaDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.calendar_today),
-                SizedBox(width: 10),
+                const Icon(Icons.calendar_today),
+                const SizedBox(width: 10),
                 Text(noticiaData.fecha),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.access_time),
-                SizedBox(width: 10),
+                const Icon(Icons.access_time),
+                const SizedBox(width: 10),
                 Text(noticiaData.hora),
               ],
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Descripción:',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(noticiaData.descripcion),
           ],
         ),

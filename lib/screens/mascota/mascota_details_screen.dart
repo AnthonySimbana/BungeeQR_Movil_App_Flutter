@@ -63,13 +63,6 @@ class MascotaDetailsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           buildContactIcons(),
-          //SizedBox(height: 10),
-          // const Divider(
-          //   color: Colors.grey,
-          //   height: 20,
-          //   thickness: 1,
-          // ),
-
           const Align(
             alignment: Alignment.centerLeft, // Alineación a la izquierda
             child: Text(

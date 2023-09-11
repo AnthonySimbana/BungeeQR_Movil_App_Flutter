@@ -32,8 +32,8 @@ class _AddImagenWidget extends State<AddImagenWidget> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              leading: Icon(Icons.photo_camera),
-              title: Text('Cámara'),
+              leading: const Icon(Icons.photo_camera),
+              title: const Text('Cámara'),
               onTap: () async {
                 //final imagen = await getImage();
                 Navigator.of(context)
@@ -41,8 +41,8 @@ class _AddImagenWidget extends State<AddImagenWidget> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.photo_library),
-              title: Text('Galería'),
+              leading: const Icon(Icons.photo_library),
+              title: const Text('Galería'),
               onTap: () async {
                 Navigator.of(context)
                     .pop(await picker.pickImage(source: ImageSource.gallery));
@@ -78,7 +78,7 @@ class _AddImagenWidget extends State<AddImagenWidget> {
           height: 120,
           child: CircleAvatar(
             backgroundColor:
-                Color.fromARGB(0, 156, 152, 152), // Añade esta línea
+                const Color.fromARGB(0, 156, 152, 152), // Añade esta línea
             backgroundImage: imageProvider,
             radius: 60.0,
           ),

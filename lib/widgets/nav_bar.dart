@@ -39,7 +39,6 @@ class _NavBarState extends State<NavBar> {
               if (snapshot.hasError || !snapshot.hasData) {
                 return const Text('Error o usuario no autenticado');
               }
-              final user = snapshot.data!;
               _inicializarInformacion();
 
               return UserAccountsDrawerHeader(

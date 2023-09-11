@@ -30,7 +30,7 @@ class _NoticiaListItemsState extends State<NoticiaListItems> {
               child: Card(
                 elevation: 10,
                 child: ListTile(
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: const EdgeInsets.all(10),
                   leading: AspectRatio(
                     aspectRatio: 2,
                     child: ClipRRect(
@@ -47,7 +47,9 @@ class _NoticiaListItemsState extends State<NoticiaListItems> {
                               widget.noticias[index].fecha,
                             ), //Formatear Fecha
                             style: TextStyle(
-                                fontSize:12, color: hexStringToColor('#4A43EC'),fontWeight: FontWeight.bold)),
+                                fontSize: 12,
+                                color: hexStringToColor('#4A43EC'),
+                                fontWeight: FontWeight.bold)),
                         Text(widget.noticias[index].descripcion),
                       ]),
                 ),

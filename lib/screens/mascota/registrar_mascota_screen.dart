@@ -30,7 +30,6 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
       'https://firebasestorage.googleapis.com/v0/b/bungeeqr.appspot.com/o/Iconos%2FaddMascota.jpg?alt=media&token=901cd5a4-fff6-4767-b67e-8b112961ef23';
   //Agregar imagen mascota la mascota y actualizar su url
   Future<void> _registrarMascota() async {
-    print('_registrarMascota en ejecucion');
     String? imagenUrlAux = await uploadImageMascota(imageDataUpload!);
     setState(() {
       imagenUrl = imagenUrlAux;
@@ -69,7 +68,6 @@ class _RegistrarMascotaScreenState extends State<RegistrarMascotaScreen> {
 
         await mascotaProvider.checkMascotas(uid!);
         int id = mascotaProvider.totalMascotas + 1;
-        print('Id de la mascota a registrar: $id');
         //Crear objeto mascota
         final mascota = Mascota(
           id: id,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  //Colores primarios y secundarios de la aplicacion
   static Color primaryColor = hexStringToColor('#4A43EC');
   static Color secondaryColor = Color(0xFFE57373);
 
